@@ -20,13 +20,13 @@ void yyerror(const char* msg)
 
 %%
 
-start: expr { printf("\n"); }
-    | expr TK_EOL { printf("\n"); }
-    | expr TK_EOL start { printf("\n"); }
+start: expr
+    | expr TK_EOL
+    | expr TK_EOL start
 ;
 
 expr: TK_ID TK_EQ expr_op { array[$1] = $3; $$ = $1; }
-    | TK_PRINT TK_LEFT_PAR expr_op TK_RIGHT_PAR { printf("%d\n", $3); }
+    | TK_PRINT expr_op { printf("%d\n", $2); }
     |
 ;
 
