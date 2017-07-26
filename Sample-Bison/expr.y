@@ -1,10 +1,11 @@
 %{
 #include <stdio.h>
 int yylex();
+extern int yylineno;
 int array[8];
 void yyerror(const char* msg)
 {
-    printf("%s\n", msg);
+    printf("Line:%d %s\n", yylineno, msg);
 }
 
 #define YYERROR_VERBOSE 1
