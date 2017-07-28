@@ -1,9 +1,14 @@
+/*
+ * Comentario 1
+*/
+
 $0 = 10
+//Comentario 1
 $7 = 20
+#include "input2.txt" 
 
 $1 = ($0 + $7) * 5
 
-print $0
-print $7
 print $1
-print $1 + 10
+print ($1 + 10)
+// Comentario 2

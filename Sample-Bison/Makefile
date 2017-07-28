@@ -16,7 +16,7 @@ expr_parser.c: expr.y
 	gcc -c -o $@ $<
 
 run: $(TARGET)
-	./$(TARGET) < input.txt
+	./$(TARGET) input.txt
 
 clean:
 	rm -f expr_parser.c expr_lexer.c
