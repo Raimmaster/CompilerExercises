@@ -3,7 +3,7 @@
 int yylex();
 void yyparse();
 extern FILE* yyin;
-
+int push_file(char *);
 int main(int argc, char* argv[])
 {
     if(argc != 2)

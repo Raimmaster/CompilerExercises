@@ -19,49 +19,84 @@
   char* yyfilename;
   int push_file(char*);
   int pop_file();
+  char * trim(char* s, char* val);
 %}
 
 %%
-[ \t]+  { /* NADA */ }
-"/*"                        { BEGIN(comment); }
-"//".*\n                    { return TK_EOL; }
-^"#"[ \t]*"include"[ \t]*\" { BEGIN(include); }
-"+"                         { return OP_ADD; }
-"-"                         { return OP_SUB; }
-"*"                         { return OP_MUL; }
-"/"                         { return OP_DIV; }
-"("                         { return TK_LEFT_PAR; }
-")"                         { return TK_RIGHT_PAR; }
-"$"[0-7]                    { yylval = atoi(yytext + 1) ; return TK_ID; }
-"print"                     { return TK_PRINT; }
-"="                         { return TK_EQ; }
-[0-9]+                      { yylval = atoi(yytext); return TK_NUMBER; }
-"\n"                        { return TK_EOL; }
-<<EOF>>                     {
-                                if(pop_file() != 0)
-                                {
+[ \t]+                          { /* NADA */ }
+"/*"                            { BEGIN(comment); }
+"//".*\n                        { return TK_EOL; }
+^"#"[ \t]*"include"[ \t]*[\"<]  { BEGIN(include); }
+"+"                             { return OP_ADD; }
+"-"                             { return OP_SUB; }
+"/"                             { return OP_DIV; }
+"*"                             { return OP_MUL; }
+"("                             { return TK_LEFT_PAR; }
+")"                             { return TK_RIGHT_PAR; }
+"$"[0-7]                        { yylval = atoi(yytext + 1) ; return TK_ID; }
+"print"                         { return TK_PRINT; }
+"="                             { return TK_EQ; }
+[0-9]+                          { yylval = atoi(yytext); return TK_NUMBER; }
+"\n"                            { return TK_EOL; }
+<<EOF>>                         {
+                                    if(pop_file() != 0)
+                                    {
+                                        yyterminate();
+                                    }
+                                }
+.                               { return TK_ERROR; }
+<include>[^+\n]+[\">]           {
+                                    {
+                                        int c;
+                                        while((c = input()) && c!= '\n');
+                                        ++yylineno;
+                                        char* original_text = yytext - 1;
+                                        int len = strlen(original_text);
+                                        char* filename = malloc(sizeof(char) * (len + 1));
+                                        memset(filename, '\0', len);
+                                        strncpy(filename, original_text, len);
+                                        printf("The filename: %s with length %d\n", filename, len);
+                                        char init_char = filename[0];
+                                        char final_char = filename[len-1];
+                                        if(init_char != final_char)
+                                        {
+                                            if(!(init_char == '<' && final_char == '>'))
+                                            {
+                                                fprintf(
+                                                    stderr,
+                                                    "Enclosing characters must be the same. Init is %c and final is %c\n",
+                                                    init_char,
+                                                    final_char
+                                                    );
+                                                free(filename);
+                                                yyterminate();
+                                            }
+                                        }
+                                        if(init_char == '"')
+                                        {
+                                            filename = trim(filename, "\"");
+                                        }else
+                                        {
+                                            filename = trim(filename, "<");
+                                            filename = trim(filename, ">");
+                                        }
+                                        printf("New filename: %s\n", filename);
+                                        if(push_file(filename) != 0)
+                                        {
+                                            free(filename);
+                                            yyterminate();
+                                        }
+                                        free(filename);
+                                        BEGIN(INITIAL);
+                                    }
+                                }
+<include>.|\n                   {
+                                    fprintf(stderr, "Bad included line at : %d \n", yylineno);
                                     yyterminate();
                                 }
-                            }
-.                           { return TK_ERROR; }
-
-<include>[^\"\n]+   {
-                      {
-                        int c;
-                        while((c = input()) && c!= '\n');
-                        ++yylineno;
-                        if(push_file(yytext) != 0)
-                        {
-                            yyterminate();
-                        }
-
-                        BEGIN(INITIAL);
-                      }
-                    }
-
-<comment>"*/"     { BEGIN(INITIAL); }
-<comment>.|\n     { /* Nothing */ }
-<comment><<EOF>>  { printf("Line: %d: Block comment without end.\n", yylineno); return 0;}
+<comment>"*/"                   { BEGIN(INITIAL); }
+<comment><<EOF>>                { printf("Line: %d: Block comment without end.\n", yylineno); return 0;}
+<comment>.|\n                   { /* Nothing */ }
 %%
 
 int push_file(char *filename)
@@ -111,4 +146,13 @@ int pop_file()
     incl_stack = prev_is;
 
     return 0;
+}
+
+char * trim(char* s, char* val) {
+    int l = strlen(s);
+
+    while(s[l - 1] == *val) --l;
+    while(* s && * s == *val) ++s, --l;
+
+    return strndup(s, l);
 }
