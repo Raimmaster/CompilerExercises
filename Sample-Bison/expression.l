@@ -33,11 +33,15 @@
 "*"                             { return OP_MUL; }
 "("                             { return TK_LEFT_PAR; }
 ")"                             { return TK_RIGHT_PAR; }
+","                             { return TK_COMMA; }
 "$"[0-7]                        { yylval = atoi(yytext + 1) ; return TK_ID; }
 "print"                         { return TK_PRINT; }
 "="                             { return TK_EQ; }
 [0-9]+                          { yylval = atoi(yytext); return TK_NUMBER; }
 "\n"                            { return TK_EOL; }
+"hex"                           { return KW_HEX; }
+"dec"                           { return KW_DEC; }
+"bin"                           { return KW_BIN; }
 <<EOF>>                         {
                                     if(pop_file() != 0)
                                     {
@@ -45,15 +49,15 @@
                                     }
                                 }
 .                               { return TK_ERROR; }
-<include>[^+\n]+[\">]           {
+<include>[^+\n]+[\">]$          {
                                     {
                                         int c;
-                                        while((c = input()) && c!= '\n');
+                                        while((c = input()) && c!= '"' && c!= '>');
                                         ++yylineno;
                                         char* original_text = yytext - 1;
                                         int len = strlen(original_text);
                                         char* filename = malloc(sizeof(char) * (len + 1));
-                                        memset(filename, '\0', len);
+                                        memset(filename, '\0', len + 1);
                                         strncpy(filename, original_text, len);
                                         printf("The filename: %s with length %d\n", filename, len);
                                         char init_char = filename[0];
