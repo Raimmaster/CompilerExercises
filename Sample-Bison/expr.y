@@ -1,11 +1,26 @@
 %{
 #include <stdio.h>
+#include <string.h>     /* strcat */
 int yylex();
 extern int yylineno;
 int array[8];
 void yyerror(const char* msg)
 {
     printf("Line:%d %s\n", yylineno, msg);
+}
+
+const char *byte_to_binary(int x)
+{
+    static char b[9];
+    b[0] = '\0';
+
+    int z;
+    for (z = 128; z > 0; z >>= 1)
+    {
+        strcat(b, ((x & z) == z) ? "1" : "0");
+    }
+
+    return b;
 }
 
 #define YYERROR_VERBOSE 1
@@ -30,13 +45,15 @@ start: expr
 ;
 
 expr: TK_ID TK_EQ expr_op { array[$1] = $3; $$ = $1; }
-    | TK_PRINT expr_op TK_COMMA format_expr { printf("%x\n", $2); }
+    | TK_PRINT expr_op TK_COMMA format_expr { if($4 == KW_HEX) { printf("%x\n", $2); }
+        else if ($4 == KW_DEC) { printf("%d\n", $2); } else if ($4 == KW_BIN) { printf("Bin: %s\n", byte_to_binary($2)); }
+        }
     |
 ;
 
-format_expr:  KW_HEX { $$ = $1; }
-            | KW_DEC { $$ = $1; }
-            | KW_BIN { $$ = $1; }
+format_expr:  KW_HEX { $$ = KW_HEX; }
+            | KW_DEC { $$ = KW_DEC; }
+            | KW_BIN { $$ = KW_BIN; }
 ;
 
 expr_op: expr_op OP_ADD term { $$ = $1 + $3; }
