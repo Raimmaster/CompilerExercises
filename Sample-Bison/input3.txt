@@ -1,11 +1,2 @@
-//Comentario 1
-$0 = 10
-$7 = 20
-//Comentario 2
-
-$1 = ($0 + $7) * 5
-
-print $0
-print $7 * 7
-print $1 / 3
-print $1 + 10
+print 2147483647, hex
+print ($7 * $0 * $0) * 3, bin

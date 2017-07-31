@@ -1256,8 +1256,8 @@ yyreduce:
 
   case 6:
 #line 48 "expr.y" /* yacc.c:1646  */
-    { if((yyvsp[0]) == KW_HEX) { printf("%x\n", (yyvsp[-2])); }
-        else if ((yyvsp[0]) == KW_DEC) { printf("%d\n", (yyvsp[-2])); } else if ((yyvsp[0]) == KW_BIN) { printf("Bin: %s\n", byte_to_binary((yyvsp[-2]))); }
+    { if((yyvsp[0]) == KW_HEX) { printf("Hex: %x\n", (yyvsp[-2])); }
+        else if ((yyvsp[0]) == KW_DEC) { printf("Dec: %d\n", (yyvsp[-2])); } else if ((yyvsp[0]) == KW_BIN) { printf("Bin: %s\n", byte_to_binary((yyvsp[-2]))); }
         }
 #line 1263 "expr_parser.c" /* yacc.c:1646  */
     break;

@@ -45,8 +45,8 @@ start: expr
 ;
 
 expr: TK_ID TK_EQ expr_op { array[$1] = $3; $$ = $1; }
-    | TK_PRINT expr_op TK_COMMA format_expr { if($4 == KW_HEX) { printf("%x\n", $2); }
-        else if ($4 == KW_DEC) { printf("%d\n", $2); } else if ($4 == KW_BIN) { printf("Bin: %s\n", byte_to_binary($2)); }
+    | TK_PRINT expr_op TK_COMMA format_expr { if($4 == KW_HEX) { printf("Hex: %x\n", $2); }
+        else if ($4 == KW_DEC) { printf("Dec: %d\n", $2); } else if ($4 == KW_BIN) { printf("Bin: %s\n", byte_to_binary($2)); }
         }
     |
 ;

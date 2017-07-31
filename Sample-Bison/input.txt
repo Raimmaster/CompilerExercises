@@ -5,7 +5,7 @@
 $0 = 10
 //Comentario 1
 $7 = 20
-#include <input2.txt> afsafas
+#include "input2.txt" 
 
 
 $1 = ($0 + $7) * 5

@@ -49,18 +49,16 @@
                                     }
                                 }
 .                               { return TK_ERROR; }
-<include>[\"<][^+\n]+[\">]      {
+<include>[\"<][^\"\n]+[\">]     {
                                     {
                                         int c;
-                                        while((c = input()) && c!= '\n');
-                                        ++yylineno;
                                         char* original_text = yytext;
                                         int len = strlen(original_text);
                                         char* filename = malloc(sizeof(char) * (len + 1));
                                         memset(filename, '\0', len);
                                         strncpy(filename, original_text, len);
                                         filename = trim(filename, " ");
-                                        printf("The filename: %s with length %d\n", filename, len);
+                                        /*printf("The filename: %s with length %d\n", filename, len);*/
                                         char init_char = filename[0];
                                         char final_char = filename[len-1];
                                         if(init_char != final_char)
@@ -85,7 +83,7 @@
                                             filename = trim(filename, "<");
                                             filename = trim(filename, ">");
                                         }
-                                        printf("New filename: %s\n", filename);
+                                        /*printf("New filename: %s\n", filename);*/
                                         if(push_file(filename) != 0)
                                         {
                                             free(filename);
