@@ -26,7 +26,7 @@
 [ \t]+                          { /* NADA */ }
 "/*"                            { BEGIN(comment); }
 "//".*\n                        { return TK_EOL; }
-^"#"[ \t]*"include"[ \t]*[\"<]  { BEGIN(include); }
+^"#"[ \t]*"include"[ \t]*       { BEGIN(include); }
 "+"                             { return OP_ADD; }
 "-"                             { return OP_SUB; }
 "/"                             { return OP_DIV; }
@@ -45,16 +45,17 @@
                                     }
                                 }
 .                               { return TK_ERROR; }
-<include>[^+\n]+[\">]           {
+<include>[\"<][^+\n]+[\">]      {
                                     {
                                         int c;
                                         while((c = input()) && c!= '\n');
                                         ++yylineno;
-                                        char* original_text = yytext - 1;
+                                        char* original_text = yytext;
                                         int len = strlen(original_text);
                                         char* filename = malloc(sizeof(char) * (len + 1));
                                         memset(filename, '\0', len);
                                         strncpy(filename, original_text, len);
+                                        filename = trim(filename, " ");
                                         printf("The filename: %s with length %d\n", filename, len);
                                         char init_char = filename[0];
                                         char final_char = filename[len-1];
@@ -90,7 +91,7 @@
                                         BEGIN(INITIAL);
                                     }
                                 }
-<include>.|\n                   {
+<include>.\n                    {
                                     fprintf(stderr, "Bad included line at : %d \n", yylineno);
                                     yyterminate();
                                 }
