@@ -57,7 +57,11 @@ extern int yydebug;
     TK_ERROR = 267,
     TK_PRINT = 268,
     TK_EQ = 269,
-    TK_ID = 270
+    TK_ID = 270,
+    KW_HEX = 271,
+    KW_DEC = 272,
+    KW_BIN = 273,
+    TK_COMMA = 274
   };
 #endif
 

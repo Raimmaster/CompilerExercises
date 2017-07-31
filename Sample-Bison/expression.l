@@ -33,9 +33,13 @@
 "*"                             { return OP_MUL; }
 "("                             { return TK_LEFT_PAR; }
 ")"                             { return TK_RIGHT_PAR; }
+","                             { return TK_COMMA; }
 "$"[0-7]                        { yylval = atoi(yytext + 1) ; return TK_ID; }
 "print"                         { return TK_PRINT; }
 "="                             { return TK_EQ; }
+"hex"                           { return KW_HEX; }
+"dec"                           { return KW_DEC; }
+"bin"                           { return KW_BIN; }
 [0-9]+                          { yylval = atoi(yytext); return TK_NUMBER; }
 "\n"                            { return TK_EOL; }
 <<EOF>>                         {

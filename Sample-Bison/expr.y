@@ -18,7 +18,10 @@ void yyerror(const char* msg)
 %token TK_PRINT
 %token TK_EQ
 %token TK_ID
-
+%token KW_HEX
+%token KW_DEC
+%token KW_BIN
+%token TK_COMMA
 %%
 
 start: expr
@@ -27,8 +30,13 @@ start: expr
 ;
 
 expr: TK_ID TK_EQ expr_op { array[$1] = $3; $$ = $1; }
-    | TK_PRINT expr_op { printf("%d\n", $2); }
+    | TK_PRINT expr_op TK_COMMA format_expr { printf("%x\n", $2); }
     |
+;
+
+format_expr:  KW_HEX { $$ = $1; }
+            | KW_DEC { $$ = $1; }
+            | KW_BIN { $$ = $1; }
 ;
 
 expr_op: expr_op OP_ADD term { $$ = $1 + $3; }

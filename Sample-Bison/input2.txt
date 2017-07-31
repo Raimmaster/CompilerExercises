@@ -1,2 +1,2 @@
-print $0 + 5
-print ($7 + $0) * 3
+print $0 + 5, hex
+print ($7 + $0) * 3, bin
