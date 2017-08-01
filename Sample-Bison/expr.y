@@ -3,7 +3,7 @@
 #include <string.h>     /* strcat */
 int yylex();
 extern int yylineno;
-int array[8];
+/*int array[8];*/
 void yyerror(const char* msg)
 {
     printf("Line:%d %s\n", yylineno, msg);
@@ -27,16 +27,27 @@ const char *byte_to_binary(int x)
 
 %}
 
-%token OP_ADD OP_SUB OP_MUL OP_DIV TK_LEFT_PAR TK_RIGHT_PAR
-%token TK_NUMBER TK_EOF TK_EOL
-%token TK_ERROR
-%token TK_PRINT
-%token TK_EQ
-%token TK_ID
-%token KW_HEX
-%token KW_DEC
-%token KW_BIN
-%token TK_COMMA
+%union {
+    Statement* statement_t;
+    Expr* expr_t;
+    int int_t;
+}
+
+%type <statement_t> statement assign_statement print_statement
+%type <expr_t> expr term factor
+
+%token          OP_ADD OP_SUB OP_MUL OP_DIV TK_LEFT_PAR TK_RIGHT_PAR
+%token<int_t>   TK_NUMBER
+%token          TK_EOF TK_EOL
+%token          TK_ERROR
+%token          TK_PRINT
+%token          TK_EQ
+%token<int_t>   TK_ID
+%token          KW_HEX
+%token          KW_DEC
+%token          KW_BIN
+%token          TK_COMMA
+
 %%
 
 start: expr
