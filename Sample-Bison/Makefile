@@ -18,6 +18,9 @@ expr_parser.c: expr.y
 run: $(TARGET)
 	./$(TARGET) input.txt
 
+run_alt: $(TARGET)
+	./$(TARGET) alt_input.txt
+
 clean:
 	rm -f expr_parser.c expr_lexer.c
 	rm -f *.o
