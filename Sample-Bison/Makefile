@@ -1,19 +1,21 @@
 TARGET=sample2
-C_SRCFILES=main.c expr_parser.c expr_lexer.c
-OBJ_FILES=${C_SRCFILES:.c=.o}
+EXPR_PARSER_SRC=expr_parser.cpp
+EXPR_LEXER_SRC=expr_lexer.cpp
+SRC_FILES=$(EXPR_PARSER_SRC) $(EXPR_LEXER_SRC) ast.cpp main.cpp
+OBJ_FILES=${SRC_FILES:.cpp=.o}
 .PHONY: clean
 
 $(TARGET): $(OBJ_FILES)
-	gcc -o $@ $(OBJ_FILES)
+	g++ -o $@ $(OBJ_FILES)
 
-expr_lexer.c: expression.l
+$(EXPR_LEXER_SRC): expression.l
 	flex -o $@ $^
 
-expr_parser.c: expr.y
+$(EXPR_PARSER_SRC): expr.y
 	bison --defines=tokens.h -o $@ $<
 
-%.o: %.c tokens.h
-	gcc -c -o $@ $<
+%.o: %.cpp tokens.h
+	g++ -c -o $@ $<
 
 run: $(TARGET)
 	./$(TARGET) input.txt
@@ -22,7 +24,7 @@ run_alt: $(TARGET)
 	./$(TARGET) alt_input.txt
 
 clean:
-	rm -f expr_parser.c expr_lexer.c
+	rm -f expr_parser.cpp expr_lexer.cpp
 	rm -f *.o
 	rm -f tokens.h
 	rm -f $(TARGET)

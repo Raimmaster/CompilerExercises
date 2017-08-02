@@ -1,6 +1,6 @@
-#line 2 "expr_lexer.c"
+#line 2 "expr_lexer.cpp"
 
-#line 4 "expr_lexer.c"
+#line 4 "expr_lexer.cpp"
 
 #define  YY_INT_ALIGNED short int
 
@@ -543,7 +543,7 @@ char *yytext;
   int push_file(char*);
   int pop_file();
   char * trim(char* s, char* val);
-#line 547 "expr_lexer.c"
+#line 547 "expr_lexer.cpp"
 
 #define INITIAL 0
 #define comment 1
@@ -737,7 +737,7 @@ YY_DECL
     
 #line 25 "expression.l"
 
-#line 741 "expr_lexer.c"
+#line 741 "expr_lexer.cpp"
 
 	if ( !(yy_init) )
 		{
@@ -890,7 +890,7 @@ YY_RULE_SETUP
 case 12:
 YY_RULE_SETUP
 #line 37 "expression.l"
-{ yylval = atoi(yytext + 1) ; return TK_ID; }
+{ yylval.int_t = atoi(yytext + 1) ; return TK_ID; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
@@ -920,7 +920,7 @@ YY_RULE_SETUP
 case 18:
 YY_RULE_SETUP
 #line 43 "expression.l"
-{ yylval = atoi(yytext); return TK_NUMBER; }
+{ yylval.int_t = atoi(yytext); return TK_NUMBER; }
 	YY_BREAK
 case 19:
 /* rule 19 can match eol */
@@ -952,7 +952,7 @@ YY_RULE_SETUP
                                         int c;
                                         char* original_text = yytext;
                                         int len = strlen(original_text);
-                                        char* filename = malloc(sizeof(char) * (len + 1));
+                                        char* filename = (char*)malloc(sizeof(char) * (len + 1));
                                         memset(filename, '\0', len);
                                         strncpy(filename, original_text, len);
                                         filename = trim(filename, " ");
@@ -1020,7 +1020,7 @@ YY_RULE_SETUP
 #line 103 "expression.l"
 ECHO;
 	YY_BREAK
-#line 1024 "expr_lexer.c"
+#line 1024 "expr_lexer.cpp"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -2043,7 +2043,7 @@ int push_file(char *filename)
     return 1;
   }
 
-  include_stack_t* istack = malloc(sizeof(include_stack_t));
+  include_stack_t* istack = (include_stack_t*)malloc(sizeof(include_stack_t));
   if(istack == NULL)
   {
       fprintf(stderr, "Out of memory.");

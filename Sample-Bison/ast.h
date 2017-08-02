@@ -1,7 +1,16 @@
 #ifndef _AST_H
 #define _AST_H
 
+#include <list>
+using namespace std;
+
 class Expr {//abstract by def
+protected:
+    Expr()
+    {
+
+    }
+public:
     virtual int eval() = 0;
 };
 
@@ -14,7 +23,7 @@ protected:
         this->expr2 = expr2;
     };
 public:
-    Expr *expr1, expr2;
+    Expr *expr1, *expr2;
 
 };
 
@@ -65,7 +74,7 @@ public:
     {
         return value;
     }
-}
+};
 //RTTI: RunTime Type Info
 class VarExpr : public Expr {
 public:
@@ -75,6 +84,56 @@ public:
     }
     int index;
     int eval();
-}
+};
+
+class Statement {
+protected:
+    Statement()
+    {
+
+    }
+public:
+    virtual void exec() = 0;
+};
+
+class AssignStatement : public Statement {
+public:
+    AssignStatement(int index, Expr *expr) : Statement()
+    {
+        this->index = index;
+        this->expr = expr;
+    }
+    void exec();
+
+    int     index;
+    Expr*   expr;
+};
+
+class PrintStatement : public Statement {
+public:
+    PrintStatement(Expr *expr, int format) : Statement()
+    {
+        this->expr = expr;
+        this->format = format;
+    }
+    void exec();
+
+    Expr *expr;
+    int format;
+};
+
+class BlockStatement : public Statement {
+public:
+    BlockStatement() {}
+
+    void addStatement(Statement *statement)
+    {
+        statementList.push_back(statement);
+    }
+
+    void exec();
+
+    list<Statement*> statementList;
+};
 
 #endif

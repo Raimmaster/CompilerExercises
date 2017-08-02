@@ -39,6 +39,12 @@
 #if YYDEBUG
 extern int yydebug;
 #endif
+/* "%code requires" blocks.  */
+#line 1 "expr.y" /* yacc.c:1909  */
+
+    #include "ast.h"
+
+#line 48 "tokens.h" /* yacc.c:1909  */
 
 /* Token type.  */
 #ifndef YYTOKENTYPE
@@ -52,12 +58,12 @@ extern int yydebug;
     TK_LEFT_PAR = 262,
     TK_RIGHT_PAR = 263,
     TK_NUMBER = 264,
-    TK_EOF = 265,
-    TK_EOL = 266,
-    TK_ERROR = 267,
-    TK_PRINT = 268,
-    TK_EQ = 269,
-    TK_ID = 270,
+    TK_ID = 265,
+    TK_EOF = 266,
+    TK_EOL = 267,
+    TK_ERROR = 268,
+    TK_PRINT = 269,
+    TK_EQ = 270,
     KW_HEX = 271,
     KW_DEC = 272,
     KW_BIN = 273,
@@ -67,7 +73,17 @@ extern int yydebug;
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+typedef union YYSTYPE YYSTYPE;
+union YYSTYPE
+{
+#line 34 "expr.y" /* yacc.c:1909  */
+
+    Statement* statement_t;
+    Expr* expr_t;
+    int int_t;
+
+#line 86 "tokens.h" /* yacc.c:1909  */
+};
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif

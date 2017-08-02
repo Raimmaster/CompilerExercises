@@ -34,13 +34,13 @@
 "("                             { return TK_LEFT_PAR; }
 ")"                             { return TK_RIGHT_PAR; }
 ","                             { return TK_COMMA; }
-"$"[0-7]                        { yylval = atoi(yytext + 1) ; return TK_ID; }
+"$"[0-7]                        { yylval.int_t = atoi(yytext + 1) ; return TK_ID; }
 "print"                         { return TK_PRINT; }
 "="                             { return TK_EQ; }
 "hex"                           { return KW_HEX; }
 "dec"                           { return KW_DEC; }
 "bin"                           { return KW_BIN; }
-[0-9]+                          { yylval = atoi(yytext); return TK_NUMBER; }
+[0-9]+                          { yylval.int_t = atoi(yytext); return TK_NUMBER; }
 "\n"                            { return TK_EOL; }
 <<EOF>>                         {
                                     if(pop_file() != 0)
@@ -54,7 +54,7 @@
                                         int c;
                                         char* original_text = yytext;
                                         int len = strlen(original_text);
-                                        char* filename = malloc(sizeof(char) * (len + 1));
+                                        char* filename = (char*)malloc(sizeof(char) * (len + 1));
                                         memset(filename, '\0', len);
                                         strncpy(filename, original_text, len);
                                         filename = trim(filename, " ");
@@ -111,7 +111,7 @@ int push_file(char *filename)
     return 1;
   }
 
-  include_stack_t* istack = malloc(sizeof(include_stack_t));
+  include_stack_t* istack = (include_stack_t*)malloc(sizeof(include_stack_t));
   if(istack == NULL)
   {
       fprintf(stderr, "Out of memory.");

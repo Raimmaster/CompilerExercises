@@ -38,3 +38,18 @@ int VarExpr::eval()
 {
     return vars[index];
 }
+
+void AssignStatement::exec()
+{
+
+}
+
+void PrintStatement::exec()
+{
+
+}
+
+void BlockStatement::exec()
+{
+    
+}
