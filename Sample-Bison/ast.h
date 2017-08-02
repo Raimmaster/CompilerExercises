@@ -2,6 +2,9 @@
 #define _AST_H
 
 #include <list>
+#include <stdio.h>
+#include <string.h>
+
 using namespace std;
 
 class Expr {//abstract by def

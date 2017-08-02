@@ -4,27 +4,12 @@
 
 %{
 #include <stdio.h>
-#include <string.h>
 
 int yylex();
 extern int yylineno;
 void yyerror(const char* msg)
 {
     printf("Line:%d %s\n", yylineno, msg);
-}
-
-const char *byte_to_binary(int x)
-{
-    static char b[9];
-    b[0] = '\0';
-
-    int z;
-    for (z = 128; z > 0; z >>= 1)
-    {
-        strcat(b, ((x & z) == z) ? "1" : "0");
-    }
-
-    return b;
 }
 
 #define YYERROR_VERBOSE 1
@@ -80,9 +65,9 @@ assign_statement: TK_ID TK_EQ expr_op { $$ = new AssignStatement($1, $3); }
 print_statement: TK_PRINT expr_op TK_COMMA format_expr { $$ = new PrintStatement($2, $4); }
 ;
 
-format_expr:  KW_HEX            { $$ = KW_HEX; }
-            | KW_DEC            { $$ = KW_DEC; }
-            | KW_BIN            { $$ = KW_BIN; }
+format_expr:  KW_HEX            { $$ = 0; }
+            | KW_DEC            { $$ = 1; }
+            | KW_BIN            { $$ = 2; }
 ;
 
 expr_op:  expr_op OP_ADD term        { $$ = new AddExpr($1, $3); }
