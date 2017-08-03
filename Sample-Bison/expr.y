@@ -37,7 +37,7 @@ void yyerror(const char* msg)
 %token          KW_HEX
 %token          KW_DEC
 %token          KW_BIN
-%tokek          TK_COMMA
+%token          TK_COMMA
 %token          TK_LEFT_CURLY_BRACK TK_RIGHT_CURLY_BRACK
 %token          TK_COMPARE TK_NOT_EQ
 %token          TK_GREATER_THAN TK_GREATER_EQUAL
@@ -70,28 +70,28 @@ assign_statement: TK_ID TK_EQ expr_op { $$ = new AssignStatement($1, $3); }
 print_statement: TK_PRINT expr_op TK_COMMA format_expr { $$ = new PrintStatement($2, $4); }
 ;
 
-conditional_statement: KW_IF TK_LEFT_PAR conditional_expression TK_RIGHT_PAR block_statement optional_else {
-        $$ = new IfStatement($3, $5, $6);
+conditional_statement: KW_IF TK_LEFT_PAR conditional_expression TK_RIGHT_PAR optional_eol block_statement optional_eol optional_else {
+        $$ = new IfStatement($3, $6, $8);
     }
 ;
 
-conditional_expression: expr_op compare_ops expr_op { $$ = $2;  }
+conditional_expression: expr_op compare_ops expr_op { $$ = $2; ((BinaryExpr*)$$)->expr1 = $1; ((BinaryExpr*)$$)->expr2 = $3; } /*TODO*/
 ;
 
 compare_ops: TK_COMPARE { $$ = new EqualExpr; }
     | TK_NOT_EQ         { $$ = new NotEqualExpr; }
     | TK_GREATER_THAN   { $$ = new GreaterThanExpr; }
     | TK_GREATER_EQUAL  { $$ = new GreaterEqualExpr; }
-    | TK_LESS_THAN      { $$ = new LessExpr; }
+    | TK_LESS_THAN      { $$ = new LessThanExpr; }
     | TK_LESS_EQUAL     { $$ = new LessEqualExpr; }
 ;
 
-block_statement: statement                                      { $$ = new BlockStatement; ((BlockStatement*)$$)->addStatement($1); }
-    | TK_LEFT_CURLY_BRACK statement_list TK_RIGHT_CURLY_BRACK   { $$ = $1; }
+block_statement: statement                                     { $$ = new BlockStatement; ((BlockStatement*)$$)->addStatement($1); }
+    | TK_LEFT_CURLY_BRACK statement_list TK_RIGHT_CURLY_BRACK  { $$ = $1; }
 ;
 
-optional_else: KW_ELSE block_statement  { $$ = new BlockStatement; ((BlockStatement*)$$)->addStatement($2); }
-    |                                   { $$ = NULL; }
+optional_else: KW_ELSE optional_eol block_statement  { $$ = new BlockStatement; ((BlockStatement*)$$)->addStatement($2); }
+    |                                                { $$ = NULL; }
 ;
 
 format_expr:  KW_HEX            { $$ = 0; }
@@ -109,6 +109,6 @@ term: term OP_MUL factor    { $$ = new MulExpr($1, $3); }
     | factor                { $$ = $1; }
 ;
 
-factor:   TK_NUMBER                           { $$ = new NumberExpr($1); }
+factor:   TK_NUMBER                         { $$ = new NumberExpr($1); }
         | TK_ID                             { $$ = new VarExpr($1); }
         | TK_LEFT_PAR expr_op TK_RIGHT_PAR  { $$ = $2; }

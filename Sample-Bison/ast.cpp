@@ -2,6 +2,14 @@
 
 int vars[8];
 
+#define IMPLEMENT_BINARY_EXPR_EVAL(name, op) \
+    int name##Expr::eval() {               \
+        int v1 = expr1->eval();             \
+        int v2 = expr2->eval();             \
+                                            \
+        return v1 op v2;                    \
+    }
+
 int AddExpr::eval()
 {
     int v1 = expr1->eval();
@@ -83,3 +91,22 @@ void BlockStatement::exec()
         (*it)->exec();
     }
 }
+
+void IfStatement::exec()
+{
+    int result = this->condition_expr->eval();
+    if(result == 1)
+    {
+        this->if_body->exec();
+    }else
+    {
+        this->else_body->exec();
+    }
+}
+
+IMPLEMENT_BINARY_EXPR_EVAL(Equal, ==);
+IMPLEMENT_BINARY_EXPR_EVAL(NotEqual, !=);
+IMPLEMENT_BINARY_EXPR_EVAL(LessThan, <);
+IMPLEMENT_BINARY_EXPR_EVAL(LessEqual, <=);
+IMPLEMENT_BINARY_EXPR_EVAL(GreaterThan, >);
+IMPLEMENT_BINARY_EXPR_EVAL(GreaterEqual, >=);

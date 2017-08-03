@@ -7,6 +7,13 @@
 
 using namespace std;
 
+#define DEFINE_BINARY_EXPR(name) \
+    class name##Expr : public BinaryExpr { \
+    public:                                 \
+        name##Expr(Expr* expr1, Expr* expr2) : BinaryExpr(expr1, expr2) {} \
+        int eval(); \
+    }
+
 class Expr {//abstract by def
 protected:
     Expr()
@@ -28,42 +35,6 @@ protected:
 public:
     Expr *expr1, *expr2;
 
-};
-
-class AddExpr : public BinaryExpr {
-public:
-    AddExpr(Expr *expr1, Expr *expr2) : BinaryExpr(expr1, expr2)
-    {
-
-    }
-    int eval();
-};
-
-class SubExpr : public BinaryExpr {
-public:
-    SubExpr(Expr *expr1, Expr *expr2) : BinaryExpr(expr1, expr2)
-    {
-
-    }
-    int eval();
-};
-
-class MulExpr : public BinaryExpr {
-public:
-    MulExpr(Expr *expr1, Expr *expr2) : BinaryExpr(expr1, expr2)
-    {
-
-    }
-    int eval();
-};
-
-class DivExpr : public BinaryExpr {
-public:
-    DivExpr(Expr *expr1, Expr *expr2) : BinaryExpr(expr1, expr2)
-    {
-
-    }
-    int eval();
 };
 
 class NumberExpr : public Expr {
@@ -139,27 +110,29 @@ public:
     list<Statement*> statementList;
 };
 
-class ConditionalExpr : public BinaryExpr {
-public:
-    ConditionalExpr(Expr* left_side, Expr* right_side) : BinaryExpr(left_side, right_side)
-    {
-    }
-    int eval();
-}
-
 class IfStatement : public Statement {
 public:
-    IfStatement(ConditionalExpr* condition_expr, BlockStatement* if_body, BlockStatement* else_body)
+    IfStatement(BinaryExpr* condition_expr, BlockStatement* if_body, BlockStatement* else_body)
     {
         this->condition_expr = condition_expr;
         this->if_body = if_body;
         this->else_body = else_body;
     }
-    ConditionalExpr* condition_expr;
+    BinaryExpr* condition_expr;
     BlockStatement* if_body;
     BlockStatement* else_body;
 
     void exec();
 }
 
+DEFINE_BINARY_EXPR(Add);
+DEFINE_BINARY_EXPR(Sub);
+DEFINE_BINARY_EXPR(Div);
+DEFINE_BINARY_EXPR(Mul);
+DEFINE_BINARY_EXPR(Equal);
+DEFINE_BINARY_EXPR(NotEqual);
+DEFINE_BINARY_EXPR(LessThan);
+DEFINE_BINARY_EXPR(LessEqual);
+DEFINE_BINARY_EXPR(GreaterThan);
+DEFINE_BINARY_EXPR(GreaterEqual);
 #endif

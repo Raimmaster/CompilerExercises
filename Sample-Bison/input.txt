@@ -4,7 +4,7 @@
 $0 = 10
 //Comentario 1
 $7 = 20
-#include "input2.txt"
+//#include "input2.txt"
 
 if($0 == 10){
     $1 = ($0 + $7) * 5
