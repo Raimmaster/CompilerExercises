@@ -139,4 +139,27 @@ public:
     list<Statement*> statementList;
 };
 
+class ConditionalExpr : public BinaryExpr {
+public:
+    ConditionalExpr(Expr* left_side, Expr* right_side) : BinaryExpr(left_side, right_side)
+    {
+    }
+    int eval();
+}
+
+class IfStatement : public Statement {
+public:
+    IfStatement(ConditionalExpr* condition_expr, BlockStatement* if_body, BlockStatement* else_body)
+    {
+        this->condition_expr = condition_expr;
+        this->if_body = if_body;
+        this->else_body = else_body;
+    }
+    ConditionalExpr* condition_expr;
+    BlockStatement* if_body;
+    BlockStatement* else_body;
+
+    void exec();
+}
+
 #endif

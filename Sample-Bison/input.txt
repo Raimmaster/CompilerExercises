@@ -5,7 +5,11 @@ $0 = 10
 //Comentario 1
 $7 = 20
 #include "input2.txt"
-$1 = ($0 + $7) * 5
+
+if($0 == 10){
+    $1 = ($0 + $7) * 5
+}else
+    $1 = 25
 print $1 + 9, hex
 print ($1 + 10), dec
 // Comentario 2

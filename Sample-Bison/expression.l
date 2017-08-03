@@ -33,13 +33,23 @@
 "*"                             { return OP_MUL; }
 "("                             { return TK_LEFT_PAR; }
 ")"                             { return TK_RIGHT_PAR; }
+"{"                             { return TK_LEFT_CURLY_BRACK; }
+"}"                             { return TK_RIGHT_CURLY_BRACK; }
 ","                             { return TK_COMMA; }
 "$"[0-7]                        { yylval.int_t = atoi(yytext + 1) ; return TK_ID; }
 "print"                         { return TK_PRINT; }
 "="                             { return TK_EQ; }
+"=="                            { return TK_COMPARE; }
+"!="                            { return TK_NOT_EQ; }
+">"                             { return TK_GREATER_THAN; }
+"<"                             { return TK_LESS_THAN; }
+">="                            { return TK_GREATER_EQUAL; }
+"<="                            { return TK_LESS_EQUAL; }
 "hex"                           { return KW_HEX; }
 "dec"                           { return KW_DEC; }
 "bin"                           { return KW_BIN; }
+"if"                            { return KW_IF; }
+"else"                          { return KW_ELSE; }
 [0-9]+                          { yylval.int_t = atoi(yytext); return TK_NUMBER; }
 "\n"                            { return TK_EOL; }
 <<EOF>>                         {
