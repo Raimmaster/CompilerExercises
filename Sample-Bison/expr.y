@@ -23,6 +23,10 @@ void yyerror(const char* msg)
 }
 
 %type<statement_t> statement assign_statement print_statement statement_list
+%type<statement_t> conditional_statement
+%type<statement_t> block_statement
+%type<statement_t> optional_else
+%type<expr_t> compare_ops conditional_expression
 %type<expr_t> expr_op term
 %type<expr_t> factor
 %type<int_t> format_expr
@@ -42,6 +46,8 @@ void yyerror(const char* msg)
 %token          TK_COMPARE TK_NOT_EQ
 %token          TK_GREATER_THAN TK_GREATER_EQUAL
 %token          TK_LESS_THAN TK_LESS_EQUAL
+%token          KW_IF
+%token          KW_ELSE
 
 %%
 
@@ -87,10 +93,10 @@ compare_ops: TK_COMPARE { $$ = new EqualExpr; }
 ;
 
 block_statement: statement                                     { $$ = new BlockStatement; ((BlockStatement*)$$)->addStatement($1); }
-    | TK_LEFT_CURLY_BRACK statement_list TK_RIGHT_CURLY_BRACK  { $$ = $1; }
+    | TK_LEFT_CURLY_BRACK statement_list TK_RIGHT_CURLY_BRACK  { $$ = $2; }
 ;
 
-optional_else: KW_ELSE optional_eol block_statement  { $$ = new BlockStatement; ((BlockStatement*)$$)->addStatement($2); }
+optional_else: KW_ELSE optional_eol block_statement  { $$ = new BlockStatement; ((BlockStatement*)$$)->addStatement($3); }
     |                                                { $$ = NULL; }
 ;
 

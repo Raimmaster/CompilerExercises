@@ -67,7 +67,17 @@ extern int yydebug;
     KW_HEX = 271,
     KW_DEC = 272,
     KW_BIN = 273,
-    TK_COMMA = 274
+    TK_COMMA = 274,
+    TK_LEFT_CURLY_BRACK = 275,
+    TK_RIGHT_CURLY_BRACK = 276,
+    TK_COMPARE = 277,
+    TK_NOT_EQ = 278,
+    TK_GREATER_THAN = 279,
+    TK_GREATER_EQUAL = 280,
+    TK_LESS_THAN = 281,
+    TK_LESS_EQUAL = 282,
+    KW_IF = 283,
+    KW_ELSE = 284
   };
 #endif
 
@@ -82,7 +92,7 @@ union YYSTYPE
     Expr* expr_t;
     int int_t;
 
-#line 86 "tokens.h" /* yacc.c:1909  */
+#line 96 "tokens.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1

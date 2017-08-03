@@ -11,6 +11,7 @@ using namespace std;
     class name##Expr : public BinaryExpr { \
     public:                                 \
         name##Expr(Expr* expr1, Expr* expr2) : BinaryExpr(expr1, expr2) {} \
+        name##Expr() : BinaryExpr() {}                                      \
         int eval(); \
     }
 
@@ -32,6 +33,7 @@ protected:
         this->expr1 = expr1;
         this->expr2 = expr2;
     };
+    BinaryExpr(){}
 public:
     Expr *expr1, *expr2;
 
@@ -112,18 +114,18 @@ public:
 
 class IfStatement : public Statement {
 public:
-    IfStatement(BinaryExpr* condition_expr, BlockStatement* if_body, BlockStatement* else_body)
+    IfStatement(Expr* condition_expr, Statement* if_body, Statement* else_body)
     {
         this->condition_expr = condition_expr;
         this->if_body = if_body;
         this->else_body = else_body;
     }
-    BinaryExpr* condition_expr;
-    BlockStatement* if_body;
-    BlockStatement* else_body;
+    Expr* condition_expr;
+    Statement* if_body;
+    Statement* else_body;
 
     void exec();
-}
+};
 
 DEFINE_BINARY_EXPR(Add);
 DEFINE_BINARY_EXPR(Sub);
