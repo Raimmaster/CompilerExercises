@@ -12,7 +12,7 @@ $(EXPR_LEXER_SRC): expression.l
 	flex -o $@ $^
 
 $(EXPR_PARSER_SRC): expr.y
-	bison --defines=tokens.h -o $@ $<
+	bison -rall --defines=tokens.h -o $@ $<
 
 %.o: %.cpp tokens.h
 	g++ -c -o $@ $<
@@ -28,3 +28,4 @@ clean:
 	rm -f *.o
 	rm -f tokens.h
 	rm -f $(TARGET)
+	rm -f *.output

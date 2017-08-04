@@ -15,7 +15,7 @@ void yyerror(const char* msg)
 #define YYERROR_VERBOSE 1
 
 %}
-
+%expect 1
 %union {
     Statement* statement_t;
     Expr* expr_t;
@@ -51,18 +51,18 @@ void yyerror(const char* msg)
 
 %%
 /*NO PROBLEM*/
-code: optional_eol_list statement_list optional_eol_list { $2->exec(); }
+code: optional_eol statement_list optional_eol { $2->exec(); }
 ;
 /*NO PROBLEM*/
-statement_list: optional_eol_list statement_list optional_eol_list statement { $$ = $2; ((BlockStatement *)$$)->addStatement($4); }
-    | optional_eol_list statement optional_eol_list     { $$ = new BlockStatement; ((BlockStatement*)$$)->addStatement($2); }
+statement_list: statement_list eol_list statement { $$ = $1; ((BlockStatement *)$$)->addStatement($3); }
+    | statement     { $$ = new BlockStatement; ((BlockStatement*)$$)->addStatement($1); }
 ;
 /*NO PROBLEM*/
-optional_eol_list: optional_eol_list optional_eol
-                | optional_eol
+eol_list: eol_list TK_EOL
+    | TK_EOL
 ;
 /*NO PROBLEM*/
-optional_eol: TK_EOL
+optional_eol: eol_list
     |
 ;
 /*NO PROBLEM*/
@@ -77,7 +77,7 @@ assign_statement: TK_ID TK_EQ expr_op { $$ = new AssignStatement($1, $3); }
 print_statement: TK_PRINT expr_op TK_COMMA format_expr { $$ = new PrintStatement($2, $4); }
 ;
 
-conditional_statement: KW_IF TK_LEFT_PAR conditional_expression TK_RIGHT_PAR optional_eol block_statement optional_eol optional_else {
+conditional_statement: KW_IF TK_LEFT_PAR conditional_expression TK_RIGHT_PAR eol_list block_statement eol_list optional_else {
         $$ = new IfStatement($3, $6, $8);
     }
 ;
@@ -97,7 +97,7 @@ block_statement: statement                                     { $$ = new BlockS
     | TK_LEFT_CURLY_BRACK statement_list TK_RIGHT_CURLY_BRACK  { $$ = $2; }
 ;
 
-optional_else: KW_ELSE optional_eol block_statement  { $$ = new BlockStatement; ((BlockStatement*)$$)->addStatement($3); }
+optional_else: KW_ELSE eol_list block_statement  { $$ = new BlockStatement; ((BlockStatement*)$$)->addStatement($3); }
     |                                                { $$ = NULL; }
 ;
 /*NO PROBLEM*/
