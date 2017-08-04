@@ -50,30 +50,30 @@ void yyerror(const char* msg)
 %token          KW_ELSE
 
 %%
-/*NO PROBLEM*/
+
 code: optional_eol statement_list optional_eol { $2->exec(); }
 ;
-/*NO PROBLEM*/
+
 statement_list: statement_list eol_list statement { $$ = $1; ((BlockStatement *)$$)->addStatement($3); }
     | statement     { $$ = new BlockStatement; ((BlockStatement*)$$)->addStatement($1); }
 ;
-/*NO PROBLEM*/
+
 eol_list: eol_list TK_EOL
     | TK_EOL
 ;
-/*NO PROBLEM*/
+
 optional_eol: eol_list
     |
 ;
-/*NO PROBLEM*/
+
 statement: print_statement  { $$ = $1; }
     | assign_statement      { $$ = $1; }
     | conditional_statement { $$ = $1; }
 ;
-/*NO PROBLEM*/
+
 assign_statement: TK_ID TK_EQ expr_op { $$ = new AssignStatement($1, $3); }
 ;
-/*NO PROBLEM*/
+
 print_statement: TK_PRINT expr_op TK_COMMA format_expr { $$ = new PrintStatement($2, $4); }
 ;
 
@@ -93,24 +93,24 @@ compare_ops: TK_COMPARE { $$ = new EqualExpr; }
     | TK_LESS_EQUAL     { $$ = new LessEqualExpr; }
 ;
 
-block_statement: statement                                     { $$ = new BlockStatement; ((BlockStatement*)$$)->addStatement($1); }
-    | TK_LEFT_CURLY_BRACK statement_list TK_RIGHT_CURLY_BRACK  { $$ = $2; }
+block_statement: statement                  { $$ = new BlockStatement; ((BlockStatement*)$$)->addStatement($1); }
+    | TK_LEFT_CURLY_BRACK eol_list statement_list TK_RIGHT_CURLY_BRACK  { $$ = $3; }
 ;
 
 optional_else: KW_ELSE eol_list block_statement  { $$ = new BlockStatement; ((BlockStatement*)$$)->addStatement($3); }
     |                                                { $$ = NULL; }
 ;
-/*NO PROBLEM*/
+
 format_expr:  KW_HEX            { $$ = 0; }
             | KW_DEC            { $$ = 1; }
             | KW_BIN            { $$ = 2; }
 ;
-/*NO PROBLEM*/
+
 expr_op:  expr_op OP_ADD term       { $$ = new AddExpr($1, $3); }
         | expr_op OP_SUB term       { $$ = new SubExpr($1, $3); }
         | term                      { $$ = $1; }
 ;
-/*NO PROBLEM*/
+
 term: term OP_MUL factor    { $$ = new MulExpr($1, $3); }
     | term OP_DIV factor    { $$ = new DivExpr($1, $3); }
     | factor                { $$ = $1; }

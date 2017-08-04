@@ -2,16 +2,19 @@
  * Comentario 1
 */
 print 128, bin
+
 $0 = 10
 //Comentario 1
 $7 = 20
 #include "input2.txt"
 
-if($0 == 10) {
+if($0 == 100)
+{
     $1 = ($0 + $7) * 5
+    $1 = $1 * 2 + 1
 }
 else
     $1 = 25
-print $1 + 9, hex
-print ($1 + 10), dec
+print $1, dec
+print ($1 + 10), hex
 // Comentario 2
