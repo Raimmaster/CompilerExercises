@@ -97,10 +97,12 @@ void IfStatement::exec()
     int result = this->condition_expr->eval();
     if(result == 1)
     {
-        this->if_body->exec();
+        if(if_body != NULL)
+            this->if_body->exec();
     }else
     {
-        this->else_body->exec();
+        if(else_body != NULL)
+            this->else_body->exec();
     }
 }
 

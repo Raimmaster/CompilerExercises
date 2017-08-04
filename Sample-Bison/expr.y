@@ -50,29 +50,30 @@ void yyerror(const char* msg)
 %token          KW_ELSE
 
 %%
-
+/*NO PROBLEM*/
 code: optional_eol_list statement_list optional_eol_list { $2->exec(); }
 ;
-
-statement_list:   statement_list optional_eol_list statement { $$ = $1; ((BlockStatement *)$$)->addStatement($3); }
-                | statement optional_eol_list                { $$ = new BlockStatement; ((BlockStatement*)$$)->addStatement($1); }
+/*NO PROBLEM*/
+statement_list: optional_eol_list statement_list optional_eol_list statement { $$ = $2; ((BlockStatement *)$$)->addStatement($4); }
+    | optional_eol_list statement optional_eol_list     { $$ = new BlockStatement; ((BlockStatement*)$$)->addStatement($2); }
 ;
-
+/*NO PROBLEM*/
 optional_eol_list: optional_eol_list optional_eol
                 | optional_eol
-
+;
+/*NO PROBLEM*/
 optional_eol: TK_EOL
     |
 ;
-
+/*NO PROBLEM*/
 statement: print_statement  { $$ = $1; }
     | assign_statement      { $$ = $1; }
     | conditional_statement { $$ = $1; }
 ;
-
+/*NO PROBLEM*/
 assign_statement: TK_ID TK_EQ expr_op { $$ = new AssignStatement($1, $3); }
 ;
-
+/*NO PROBLEM*/
 print_statement: TK_PRINT expr_op TK_COMMA format_expr { $$ = new PrintStatement($2, $4); }
 ;
 
@@ -81,7 +82,7 @@ conditional_statement: KW_IF TK_LEFT_PAR conditional_expression TK_RIGHT_PAR opt
     }
 ;
 
-conditional_expression: expr_op compare_ops expr_op { $$ = $2; ((BinaryExpr*)$$)->expr1 = $1; ((BinaryExpr*)$$)->expr2 = $3; } /*TODO*/
+conditional_expression: expr_op compare_ops expr_op { $$ = $2; ((BinaryExpr*)$$)->expr1 = $1; ((BinaryExpr*)$$)->expr2 = $3; }
 ;
 
 compare_ops: TK_COMPARE { $$ = new EqualExpr; }
@@ -99,22 +100,23 @@ block_statement: statement                                     { $$ = new BlockS
 optional_else: KW_ELSE optional_eol block_statement  { $$ = new BlockStatement; ((BlockStatement*)$$)->addStatement($3); }
     |                                                { $$ = NULL; }
 ;
-
+/*NO PROBLEM*/
 format_expr:  KW_HEX            { $$ = 0; }
             | KW_DEC            { $$ = 1; }
             | KW_BIN            { $$ = 2; }
 ;
-
+/*NO PROBLEM*/
 expr_op:  expr_op OP_ADD term       { $$ = new AddExpr($1, $3); }
         | expr_op OP_SUB term       { $$ = new SubExpr($1, $3); }
         | term                      { $$ = $1; }
 ;
-
+/*NO PROBLEM*/
 term: term OP_MUL factor    { $$ = new MulExpr($1, $3); }
     | term OP_DIV factor    { $$ = new DivExpr($1, $3); }
     | factor                { $$ = $1; }
 ;
 
-factor:   TK_NUMBER                         { $$ = new NumberExpr($1); }
-        | TK_ID                             { $$ = new VarExpr($1); }
-        | TK_LEFT_PAR expr_op TK_RIGHT_PAR  { $$ = $2; }
+factor: TK_NUMBER                         { $$ = new NumberExpr($1); }
+    | TK_ID                               { $$ = new VarExpr($1); }
+    | TK_LEFT_PAR expr_op TK_RIGHT_PAR    { $$ = $2; }
+;
