@@ -81,7 +81,6 @@ void PrintStatement::exec()
             printf("%s\n", byte_to_binary(this->expr->eval()));
             break;
     }
-    printf("%d \n", this->expr->eval());
 }
 
 void BlockStatement::exec()

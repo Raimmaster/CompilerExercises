@@ -81,8 +81,8 @@ assign_statement: TK_ID TK_EQ expr_op { $$ = new AssignStatement($1, $3); delete
 print_statement: TK_PRINT expr_op TK_COMMA format_expr { $$ = new PrintStatement($2, $4); }
 ;
 
-conditional_statement: KW_IF TK_LEFT_PAR conditional_expression TK_RIGHT_PAR eol_list block_statement eol_list optional_else {
-        $$ = new IfStatement($3, $6, $8);
+conditional_statement: KW_IF TK_LEFT_PAR conditional_expression TK_RIGHT_PAR eol_list block_statement optional_else {
+        $$ = new IfStatement($3, $6, $7);
     }
 ;
 

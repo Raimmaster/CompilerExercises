@@ -6,18 +6,21 @@
 uno = 100
 print uno, dec
 //Comentario 1
-dos = 20
+dos = 32
 print dos, hex
 //#include "input2.txt"
 
-if( uno == 100)
+if( uno == 1000)
 {
-    uno = (uno + dos) * 5
     uno = 900
     print uno, dec
-}
-else
-    uno = 25
-print uno, bin
-print (dos + 10), hex
+} else
+    if(uno < 1000)
+        if(uno == 1100)
+            uno = 240
+    else
+        dos = 1
+print uno, dec
+print (dos + 10), dec
+//print 150, dec
 // Comentario 2

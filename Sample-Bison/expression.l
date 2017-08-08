@@ -2,6 +2,7 @@
 %option yylineno
 %x comment
 %x include
+%x eol
 
 %{
   #include <stdio.h>
@@ -51,7 +52,7 @@
 "else"                          { return KW_ELSE; }
 [_a-zA-Z][a-zA-Z0-9_]*          { yylval.string_t = new string(yytext); return TK_ID; }
 [0-9]+                          { yylval.int_t = atoi(yytext); return TK_NUMBER; }
-"\n"                            { return TK_EOL; }
+"\n"                            { BEGIN(eol); }
 <<EOF>>                         {
                                     if(pop_file() != 0)
                                     {
@@ -92,7 +93,6 @@
                                             filename = trim(filename, "<");
                                             filename = trim(filename, ">");
                                         }
-                                        /*printf("New filename: %s\n", filename);*/
                                         if(push_file(filename) != 0)
                                         {
                                             free(filename);
@@ -109,6 +109,11 @@
 <comment>"*/"                   { BEGIN(INITIAL); }
 <comment><<EOF>>                { printf("Line: %d: Block comment without end.\n", yylineno); return 0;}
 <comment>.|\n                   { /* Nothing */ }
+<eol>\n                         { /* Nothing */ }
+<eol>"//".*\n                   { /* Nothing */ }
+<eol>[ \t]                      { /* Nothing */ }
+<eol>"else"                     { BEGIN(INITIAL); return KW_ELSE; }
+<eol>.                          { BEGIN(INITIAL); unput(yytext[0]); return TK_EOL; }
 %%
 
 int push_file(char *filename)

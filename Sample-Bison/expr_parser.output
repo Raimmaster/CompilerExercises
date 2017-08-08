@@ -4,7 +4,7 @@ Terminals unused in grammar
    TK_ERROR
 
 
-State 58 conflicts: 1 shift/reduce
+State 56 conflicts: 1 shift/reduce
 
 
 Grammar
@@ -30,7 +30,7 @@ Grammar
 
    12 print_statement: TK_PRINT expr_op TK_COMMA format_expr
 
-   13 conditional_statement: KW_IF TK_LEFT_PAR conditional_expression TK_RIGHT_PAR eol_list block_statement eol_list optional_else
+   13 conditional_statement: KW_IF TK_LEFT_PAR conditional_expression TK_RIGHT_PAR eol_list block_statement optional_else
 
    14 conditional_expression: expr_op compare_ops expr_op
 
@@ -187,7 +187,7 @@ State 4
    10          | . conditional_statement
    11 assign_statement: . TK_ID TK_EQ expr_op
    12 print_statement: . TK_PRINT expr_op TK_COMMA format_expr
-   13 conditional_statement: . KW_IF TK_LEFT_PAR conditional_expression TK_RIGHT_PAR eol_list block_statement eol_list optional_else
+   13 conditional_statement: . KW_IF TK_LEFT_PAR conditional_expression TK_RIGHT_PAR eol_list block_statement optional_else
 
     TK_ID     shift, and go to state 7
     TK_PRINT  shift, and go to state 8
@@ -245,7 +245,7 @@ State 8
 
 State 9
 
-   13 conditional_statement: KW_IF . TK_LEFT_PAR conditional_expression TK_RIGHT_PAR eol_list block_statement eol_list optional_else
+   13 conditional_statement: KW_IF . TK_LEFT_PAR conditional_expression TK_RIGHT_PAR eol_list block_statement optional_else
 
     TK_LEFT_PAR  shift, and go to state 22
 
@@ -366,7 +366,7 @@ State 19
 
 State 20
 
-   30 expr_op: term .  [$end, OP_ADD, OP_SUB, TK_RIGHT_PAR, TK_EOL, TK_COMMA, TK_RIGHT_CURLY_BRACK, TK_COMPARE, TK_NOT_EQ, TK_GREATER_THAN, TK_GREATER_EQUAL, TK_LESS_THAN, TK_LESS_EQUAL]
+   30 expr_op: term .  [$end, OP_ADD, OP_SUB, TK_RIGHT_PAR, TK_EOL, TK_COMMA, TK_RIGHT_CURLY_BRACK, TK_COMPARE, TK_NOT_EQ, TK_GREATER_THAN, TK_GREATER_EQUAL, TK_LESS_THAN, TK_LESS_EQUAL, KW_ELSE]
    31 term: term . OP_MUL factor
    32     | term . OP_DIV factor
 
@@ -385,7 +385,7 @@ State 21
 
 State 22
 
-   13 conditional_statement: KW_IF TK_LEFT_PAR . conditional_expression TK_RIGHT_PAR eol_list block_statement eol_list optional_else
+   13 conditional_statement: KW_IF TK_LEFT_PAR . conditional_expression TK_RIGHT_PAR eol_list block_statement optional_else
    14 conditional_expression: . expr_op compare_ops expr_op
    28 expr_op: . expr_op OP_ADD term
    29        | . expr_op OP_SUB term
@@ -417,7 +417,7 @@ State 23
    10          | . conditional_statement
    11 assign_statement: . TK_ID TK_EQ expr_op
    12 print_statement: . TK_PRINT expr_op TK_COMMA format_expr
-   13 conditional_statement: . KW_IF TK_LEFT_PAR conditional_expression TK_RIGHT_PAR eol_list block_statement eol_list optional_else
+   13 conditional_statement: . KW_IF TK_LEFT_PAR conditional_expression TK_RIGHT_PAR eol_list block_statement optional_else
 
     TK_ID     shift, and go to state 7
     TK_EOL    shift, and go to state 6
@@ -441,7 +441,7 @@ State 24
 
 State 25
 
-   11 assign_statement: TK_ID TK_EQ expr_op .  [$end, TK_EOL, TK_RIGHT_CURLY_BRACK]
+   11 assign_statement: TK_ID TK_EQ expr_op .  [$end, TK_EOL, TK_RIGHT_CURLY_BRACK, KW_ELSE]
    28 expr_op: expr_op . OP_ADD term
    29        | expr_op . OP_SUB term
 
@@ -542,7 +542,7 @@ State 31
 
 State 32
 
-   13 conditional_statement: KW_IF TK_LEFT_PAR conditional_expression . TK_RIGHT_PAR eol_list block_statement eol_list optional_else
+   13 conditional_statement: KW_IF TK_LEFT_PAR conditional_expression . TK_RIGHT_PAR eol_list block_statement optional_else
 
     TK_RIGHT_PAR  shift, and go to state 44
 
@@ -587,7 +587,7 @@ State 35
 
 State 36
 
-   28 expr_op: expr_op OP_ADD term .  [$end, OP_ADD, OP_SUB, TK_RIGHT_PAR, TK_EOL, TK_COMMA, TK_RIGHT_CURLY_BRACK, TK_COMPARE, TK_NOT_EQ, TK_GREATER_THAN, TK_GREATER_EQUAL, TK_LESS_THAN, TK_LESS_EQUAL]
+   28 expr_op: expr_op OP_ADD term .  [$end, OP_ADD, OP_SUB, TK_RIGHT_PAR, TK_EOL, TK_COMMA, TK_RIGHT_CURLY_BRACK, TK_COMPARE, TK_NOT_EQ, TK_GREATER_THAN, TK_GREATER_EQUAL, TK_LESS_THAN, TK_LESS_EQUAL, KW_ELSE]
    31 term: term . OP_MUL factor
    32     | term . OP_DIV factor
 
@@ -599,7 +599,7 @@ State 36
 
 State 37
 
-   29 expr_op: expr_op OP_SUB term .  [$end, OP_ADD, OP_SUB, TK_RIGHT_PAR, TK_EOL, TK_COMMA, TK_RIGHT_CURLY_BRACK, TK_COMPARE, TK_NOT_EQ, TK_GREATER_THAN, TK_GREATER_EQUAL, TK_LESS_THAN, TK_LESS_EQUAL]
+   29 expr_op: expr_op OP_SUB term .  [$end, OP_ADD, OP_SUB, TK_RIGHT_PAR, TK_EOL, TK_COMMA, TK_RIGHT_CURLY_BRACK, TK_COMPARE, TK_NOT_EQ, TK_GREATER_THAN, TK_GREATER_EQUAL, TK_LESS_THAN, TK_LESS_EQUAL, KW_ELSE]
    31 term: term . OP_MUL factor
    32     | term . OP_DIV factor
 
@@ -655,7 +655,7 @@ State 44
 
     4 eol_list: . eol_list TK_EOL
     5         | . TK_EOL
-   13 conditional_statement: KW_IF TK_LEFT_PAR conditional_expression TK_RIGHT_PAR . eol_list block_statement eol_list optional_else
+   13 conditional_statement: KW_IF TK_LEFT_PAR conditional_expression TK_RIGHT_PAR . eol_list block_statement optional_else
 
     TK_EOL  shift, and go to state 1
 
@@ -734,8 +734,8 @@ State 52
    10          | . conditional_statement
    11 assign_statement: . TK_ID TK_EQ expr_op
    12 print_statement: . TK_PRINT expr_op TK_COMMA format_expr
-   13 conditional_statement: . KW_IF TK_LEFT_PAR conditional_expression TK_RIGHT_PAR eol_list block_statement eol_list optional_else
-   13                      | KW_IF TK_LEFT_PAR conditional_expression TK_RIGHT_PAR eol_list . block_statement eol_list optional_else
+   13 conditional_statement: . KW_IF TK_LEFT_PAR conditional_expression TK_RIGHT_PAR eol_list block_statement optional_else
+   13                      | KW_IF TK_LEFT_PAR conditional_expression TK_RIGHT_PAR eol_list . block_statement optional_else
    21 block_statement: . statement
    22                | . TK_LEFT_CURLY_BRACK eol_list statement_list optional_eol TK_RIGHT_CURLY_BRACK
 
@@ -784,13 +784,16 @@ State 55
 
 State 56
 
-    4 eol_list: . eol_list TK_EOL
-    5         | . TK_EOL
-   13 conditional_statement: KW_IF TK_LEFT_PAR conditional_expression TK_RIGHT_PAR eol_list block_statement . eol_list optional_else
+   13 conditional_statement: KW_IF TK_LEFT_PAR conditional_expression TK_RIGHT_PAR eol_list block_statement . optional_else
+   23 optional_else: . KW_ELSE eol_list block_statement
+   24              | . %empty  [$end, TK_EOL, TK_RIGHT_CURLY_BRACK, KW_ELSE]
 
-    TK_EOL  shift, and go to state 1
+    KW_ELSE  shift, and go to state 58
 
-    eol_list  go to state 58
+    KW_ELSE   [reduce using rule 24 (optional_else)]
+    $default  reduce using rule 24 (optional_else)
+
+    optional_else  go to state 59
 
 
 State 57
@@ -803,7 +806,7 @@ State 57
    10          | . conditional_statement
    11 assign_statement: . TK_ID TK_EQ expr_op
    12 print_statement: . TK_PRINT expr_op TK_COMMA format_expr
-   13 conditional_statement: . KW_IF TK_LEFT_PAR conditional_expression TK_RIGHT_PAR eol_list block_statement eol_list optional_else
+   13 conditional_statement: . KW_IF TK_LEFT_PAR conditional_expression TK_RIGHT_PAR eol_list block_statement optional_else
    22 block_statement: TK_LEFT_CURLY_BRACK eol_list . statement_list optional_eol TK_RIGHT_CURLY_BRACK
 
     TK_ID     shift, and go to state 7
@@ -811,7 +814,7 @@ State 57
     TK_PRINT  shift, and go to state 8
     KW_IF     shift, and go to state 9
 
-    statement_list         go to state 59
+    statement_list         go to state 60
     statement              go to state 11
     assign_statement       go to state 12
     print_statement        go to state 13
@@ -820,21 +823,23 @@ State 57
 
 State 58
 
-    4 eol_list: eol_list . TK_EOL
-   13 conditional_statement: KW_IF TK_LEFT_PAR conditional_expression TK_RIGHT_PAR eol_list block_statement eol_list . optional_else
-   23 optional_else: . KW_ELSE eol_list block_statement
-   24              | . %empty  [$end, TK_EOL, TK_RIGHT_CURLY_BRACK]
+    4 eol_list: . eol_list TK_EOL
+    5         | . TK_EOL
+   23 optional_else: KW_ELSE . eol_list block_statement
 
-    TK_EOL   shift, and go to state 6
-    KW_ELSE  shift, and go to state 60
+    TK_EOL  shift, and go to state 1
 
-    TK_EOL    [reduce using rule 24 (optional_else)]
-    $default  reduce using rule 24 (optional_else)
-
-    optional_else  go to state 61
+    eol_list  go to state 61
 
 
 State 59
+
+   13 conditional_statement: KW_IF TK_LEFT_PAR conditional_expression TK_RIGHT_PAR eol_list block_statement optional_else .
+
+    $default  reduce using rule 13 (conditional_statement)
+
+
+State 60
 
     2 statement_list: statement_list . eol_list statement
     4 eol_list: . eol_list TK_EOL
@@ -851,32 +856,7 @@ State 59
     optional_eol  go to state 62
 
 
-State 60
-
-    4 eol_list: . eol_list TK_EOL
-    5         | . TK_EOL
-   23 optional_else: KW_ELSE . eol_list block_statement
-
-    TK_EOL  shift, and go to state 1
-
-    eol_list  go to state 63
-
-
 State 61
-
-   13 conditional_statement: KW_IF TK_LEFT_PAR conditional_expression TK_RIGHT_PAR eol_list block_statement eol_list optional_else .
-
-    $default  reduce using rule 13 (conditional_statement)
-
-
-State 62
-
-   22 block_statement: TK_LEFT_CURLY_BRACK eol_list statement_list optional_eol . TK_RIGHT_CURLY_BRACK
-
-    TK_RIGHT_CURLY_BRACK  shift, and go to state 64
-
-
-State 63
 
     4 eol_list: eol_list . TK_EOL
     8 statement: . print_statement
@@ -884,7 +864,7 @@ State 63
    10          | . conditional_statement
    11 assign_statement: . TK_ID TK_EQ expr_op
    12 print_statement: . TK_PRINT expr_op TK_COMMA format_expr
-   13 conditional_statement: . KW_IF TK_LEFT_PAR conditional_expression TK_RIGHT_PAR eol_list block_statement eol_list optional_else
+   13 conditional_statement: . KW_IF TK_LEFT_PAR conditional_expression TK_RIGHT_PAR eol_list block_statement optional_else
    21 block_statement: . statement
    22                | . TK_LEFT_CURLY_BRACK eol_list statement_list optional_eol TK_RIGHT_CURLY_BRACK
    23 optional_else: KW_ELSE eol_list . block_statement
@@ -899,7 +879,21 @@ State 63
     assign_statement       go to state 12
     print_statement        go to state 13
     conditional_statement  go to state 14
-    block_statement        go to state 65
+    block_statement        go to state 63
+
+
+State 62
+
+   22 block_statement: TK_LEFT_CURLY_BRACK eol_list statement_list optional_eol . TK_RIGHT_CURLY_BRACK
+
+    TK_RIGHT_CURLY_BRACK  shift, and go to state 64
+
+
+State 63
+
+   23 optional_else: KW_ELSE eol_list block_statement .
+
+    $default  reduce using rule 23 (optional_else)
 
 
 State 64
@@ -907,10 +901,3 @@ State 64
    22 block_statement: TK_LEFT_CURLY_BRACK eol_list statement_list optional_eol TK_RIGHT_CURLY_BRACK .
 
     $default  reduce using rule 22 (block_statement)
-
-
-State 65
-
-   23 optional_else: KW_ELSE eol_list block_statement .
-
-    $default  reduce using rule 23 (optional_else)
