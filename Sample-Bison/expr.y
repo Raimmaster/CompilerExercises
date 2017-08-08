@@ -75,7 +75,7 @@ statement: print_statement  { $$ = $1; }
     | conditional_statement { $$ = $1; }
 ;
 
-assign_statement: TK_ID TK_EQ expr_op { $$ = new AssignStatement($1, $3);}
+assign_statement: TK_ID TK_EQ expr_op { $$ = new AssignStatement($1, $3); delete $1;}
 ;
 
 print_statement: TK_PRINT expr_op TK_COMMA format_expr { $$ = new PrintStatement($2, $4); }
@@ -121,6 +121,6 @@ term: term OP_MUL factor    { $$ = new MulExpr($1, $3); }
 ;
 
 factor: TK_NUMBER                         { $$ = new NumberExpr($1); }
-    | TK_ID                               { $$ = new VarExpr($1); }
+    | TK_ID                               { $$ = new VarExpr($1); delete $1;}
     | TK_LEFT_PAR expr_op TK_RIGHT_PAR    { $$ = $2; }
 ;

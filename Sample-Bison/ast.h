@@ -57,9 +57,9 @@ class VarExpr : public Expr {
 public:
     VarExpr(string* index)
     {
-        this->index = index;
+        this->index = *index;
     }
-    string* index;
+    string index;
     int eval();
 };
 
@@ -77,12 +77,12 @@ class AssignStatement : public Statement {
 public:
     AssignStatement(string* index, Expr *expr) : Statement()
     {
-        this->index = index;
+        this->index = *index;
         this->expr = expr;
     }
     void exec();
 
-    string* index;
+    string index;
     Expr*   expr;
 };
 

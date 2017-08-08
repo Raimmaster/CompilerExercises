@@ -44,12 +44,12 @@ int DivExpr::eval()
 
 int VarExpr::eval()
 {
-    return (vars.at(*index));
+    return (vars.at(index));
 }
 
 void AssignStatement::exec()
 {
-    vars[*(this->index)] = this->expr->eval();
+    vars[(this->index)] = this->expr->eval();
 }
 
 

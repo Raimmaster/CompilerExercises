@@ -1331,7 +1331,7 @@ yyreduce:
 
   case 12:
 #line 78 "expr.y" /* yacc.c:1646  */
-    { (yyval.statement_t) = new AssignStatement((yyvsp[-2].string_t), (yyvsp[0].expr_t));}
+    { (yyval.statement_t) = new AssignStatement((yyvsp[-2].string_t), (yyvsp[0].expr_t)); delete (yyvsp[-2].string_t);}
 #line 1336 "expr_parser.cpp" /* yacc.c:1646  */
     break;
 
@@ -1477,7 +1477,7 @@ yyreduce:
 
   case 36:
 #line 124 "expr.y" /* yacc.c:1646  */
-    { (yyval.expr_t) = new VarExpr((yyvsp[0].string_t)); }
+    { (yyval.expr_t) = new VarExpr((yyvsp[0].string_t)); delete (yyvsp[0].string_t);}
 #line 1482 "expr_parser.cpp" /* yacc.c:1646  */
     break;
 
