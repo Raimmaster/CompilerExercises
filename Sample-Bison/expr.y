@@ -94,7 +94,7 @@ compare_ops: TK_COMPARE { $$ = new EqualExpr; }
 ;
 
 block_statement: statement                  { $$ = new BlockStatement; ((BlockStatement*)$$)->addStatement($1); }
-    | TK_LEFT_CURLY_BRACK eol_list statement_list TK_RIGHT_CURLY_BRACK  { $$ = $3; }
+    | TK_LEFT_CURLY_BRACK eol_list statement_list optional_eol TK_RIGHT_CURLY_BRACK  { $$ = $3; }
 ;
 
 optional_else: KW_ELSE eol_list block_statement  { $$ = new BlockStatement; ((BlockStatement*)$$)->addStatement($3); }
