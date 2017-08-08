@@ -1,6 +1,6 @@
 #include "ast.h"
 
-int vars[8];
+map<string, int> vars;
 
 #define IMPLEMENT_BINARY_EXPR_EVAL(name, op) \
     int name##Expr::eval() {               \
@@ -44,12 +44,12 @@ int DivExpr::eval()
 
 int VarExpr::eval()
 {
-    return vars[index];
+    return (vars.at(*index));
 }
 
 void AssignStatement::exec()
 {
-    vars[this->index] = this->expr->eval();
+    vars[*(this->index)] = this->expr->eval();
 }
 
 

@@ -4,8 +4,9 @@
 #include <list>
 #include <stdio.h>
 #include <string.h>
-
+#include <map>
 using namespace std;
+
 
 #define DEFINE_BINARY_EXPR(name) \
     class name##Expr : public BinaryExpr { \
@@ -54,11 +55,11 @@ public:
 //RTTI: RunTime Type Info
 class VarExpr : public Expr {
 public:
-    VarExpr(int index)
+    VarExpr(string* index)
     {
         this->index = index;
     }
-    int index;
+    string* index;
     int eval();
 };
 
@@ -74,14 +75,14 @@ public:
 
 class AssignStatement : public Statement {
 public:
-    AssignStatement(int index, Expr *expr) : Statement()
+    AssignStatement(string* index, Expr *expr) : Statement()
     {
         this->index = index;
         this->expr = expr;
     }
     void exec();
 
-    int     index;
+    string* index;
     Expr*   expr;
 };
 

@@ -36,7 +36,6 @@
 "{"                             { return TK_LEFT_CURLY_BRACK; }
 "}"                             { return TK_RIGHT_CURLY_BRACK; }
 ","                             { return TK_COMMA; }
-"$"[0-7]                        { yylval.int_t = atoi(yytext + 1) ; return TK_ID; }
 "print"                         { return TK_PRINT; }
 "="                             { return TK_EQ; }
 "=="                            { return TK_COMPARE; }
@@ -50,6 +49,7 @@
 "bin"                           { return KW_BIN; }
 "if"                            { return KW_IF; }
 "else"                          { return KW_ELSE; }
+[_a-zA-Z][a-zA-Z0-9_]*          { yylval.string_t = new string(yytext); return TK_ID; }
 [0-9]+                          { yylval.int_t = atoi(yytext); return TK_NUMBER; }
 "\n"                            { return TK_EOL; }
 <<EOF>>                         {
@@ -68,7 +68,6 @@
                                         memset(filename, '\0', len);
                                         strncpy(filename, original_text, len);
                                         filename = trim(filename, " ");
-                                        /*printf("The filename: %s with length %d\n", filename, len);*/
                                         char init_char = filename[0];
                                         char final_char = filename[len-1];
                                         if(init_char != final_char)

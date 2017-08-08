@@ -4,7 +4,10 @@
 
 %{
 #include <stdio.h>
+#include <string>
 
+
+using namespace std;
 int yylex();
 extern int yylineno;
 void yyerror(const char* msg)
@@ -20,6 +23,7 @@ void yyerror(const char* msg)
     Statement* statement_t;
     Expr* expr_t;
     int int_t;
+    string* string_t;
 }
 
 %type<statement_t> statement assign_statement print_statement statement_list
@@ -31,23 +35,23 @@ void yyerror(const char* msg)
 %type<expr_t> factor
 %type<int_t> format_expr
 
-%token          OP_ADD OP_SUB OP_MUL OP_DIV TK_LEFT_PAR TK_RIGHT_PAR
-%token<int_t>   TK_NUMBER
-%token<int_t>   TK_ID
-%token          TK_EOF TK_EOL
-%token          TK_ERROR
-%token          TK_PRINT
-%token          TK_EQ
-%token          KW_HEX
-%token          KW_DEC
-%token          KW_BIN
-%token          TK_COMMA
-%token          TK_LEFT_CURLY_BRACK TK_RIGHT_CURLY_BRACK
-%token          TK_COMPARE TK_NOT_EQ
-%token          TK_GREATER_THAN TK_GREATER_EQUAL
-%token          TK_LESS_THAN TK_LESS_EQUAL
-%token          KW_IF
-%token          KW_ELSE
+%token              OP_ADD OP_SUB OP_MUL OP_DIV TK_LEFT_PAR TK_RIGHT_PAR
+%token<int_t>       TK_NUMBER
+%token<string_t>    TK_ID
+%token              TK_EOF TK_EOL
+%token              TK_ERROR
+%token              TK_PRINT
+%token              TK_EQ
+%token              KW_HEX
+%token              KW_DEC
+%token              KW_BIN
+%token              TK_COMMA
+%token              TK_LEFT_CURLY_BRACK TK_RIGHT_CURLY_BRACK
+%token              TK_COMPARE TK_NOT_EQ
+%token              TK_GREATER_THAN TK_GREATER_EQUAL
+%token              TK_LESS_THAN TK_LESS_EQUAL
+%token              KW_IF
+%token              KW_ELSE
 
 %%
 
@@ -71,7 +75,7 @@ statement: print_statement  { $$ = $1; }
     | conditional_statement { $$ = $1; }
 ;
 
-assign_statement: TK_ID TK_EQ expr_op { $$ = new AssignStatement($1, $3); }
+assign_statement: TK_ID TK_EQ expr_op { $$ = new AssignStatement($1, $3);}
 ;
 
 print_statement: TK_PRINT expr_op TK_COMMA format_expr { $$ = new PrintStatement($2, $4); }
@@ -98,7 +102,7 @@ block_statement: statement                  { $$ = new BlockStatement; ((BlockSt
 ;
 
 optional_else: KW_ELSE eol_list block_statement  { $$ = new BlockStatement; ((BlockStatement*)$$)->addStatement($3); }
-    |                                                { $$ = NULL; }
+    |                                            { $$ = NULL; }
 ;
 
 format_expr:  KW_HEX            { $$ = 0; }

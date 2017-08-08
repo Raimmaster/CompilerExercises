@@ -86,13 +86,14 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 19 "expr.y" /* yacc.c:1909  */
+#line 22 "expr.y" /* yacc.c:1909  */
 
     Statement* statement_t;
     Expr* expr_t;
     int int_t;
+    string* string_t;
 
-#line 96 "tokens.h" /* yacc.c:1909  */
+#line 97 "tokens.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1

@@ -3,19 +3,21 @@
 */
 //print 128, bin
 
-$0 = 100
+uno = 100
+print uno, dec
 //Comentario 1
-$7 = 20
+dos = 20
+print dos, hex
 //#include "input2.txt"
 
-if($0 == 100)
+if( uno == 100)
 {
-    $1 = ($0 + $7) * 5
-    $1 = 900
-    print $1, dec
+    uno = (uno + dos) * 5
+    uno = 900
+    print uno, dec
 }
 else
-    $1 = 25
-print $1, bin
-print ($1 + 10), hex
+    uno = 25
+print uno, bin
+print (dos + 10), hex
 // Comentario 2

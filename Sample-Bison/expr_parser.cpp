@@ -65,7 +65,10 @@
 #line 5 "expr.y" /* yacc.c:339  */
 
 #include <stdio.h>
+#include <string>
 
+
+using namespace std;
 int yylex();
 extern int yylineno;
 void yyerror(const char* msg)
@@ -76,7 +79,7 @@ void yyerror(const char* msg)
 #define YYERROR_VERBOSE 1
 
 
-#line 80 "expr_parser.cpp" /* yacc.c:339  */
+#line 83 "expr_parser.cpp" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -110,7 +113,7 @@ extern int yydebug;
 
     #include "ast.h"
 
-#line 114 "expr_parser.cpp" /* yacc.c:355  */
+#line 117 "expr_parser.cpp" /* yacc.c:355  */
 
 /* Token type.  */
 #ifndef YYTOKENTYPE
@@ -152,13 +155,14 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 19 "expr.y" /* yacc.c:355  */
+#line 22 "expr.y" /* yacc.c:355  */
 
     Statement* statement_t;
     Expr* expr_t;
     int int_t;
+    string* string_t;
 
-#line 162 "expr_parser.cpp" /* yacc.c:355  */
+#line 166 "expr_parser.cpp" /* yacc.c:355  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
@@ -173,7 +177,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 177 "expr_parser.cpp" /* yacc.c:358  */
+#line 181 "expr_parser.cpp" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -473,10 +477,10 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    54,    54,    57,    58,    61,    62,    65,    66,    69,
-      70,    71,    74,    77,    80,    85,    88,    89,    90,    91,
-      92,    93,    96,    97,   100,   101,   104,   105,   106,   109,
-     110,   111,   114,   115,   116,   119,   120,   121
+       0,    58,    58,    61,    62,    65,    66,    69,    70,    73,
+      74,    75,    78,    81,    84,    89,    92,    93,    94,    95,
+      96,    97,   100,   101,   104,   105,   108,   109,   110,   113,
+     114,   115,   118,   119,   120,   123,   124,   125
 };
 #endif
 
@@ -1290,201 +1294,201 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 54 "expr.y" /* yacc.c:1646  */
+#line 58 "expr.y" /* yacc.c:1646  */
     { (yyvsp[-1].statement_t)->exec(); }
-#line 1296 "expr_parser.cpp" /* yacc.c:1646  */
+#line 1300 "expr_parser.cpp" /* yacc.c:1646  */
     break;
 
   case 3:
-#line 57 "expr.y" /* yacc.c:1646  */
+#line 61 "expr.y" /* yacc.c:1646  */
     { (yyval.statement_t) = (yyvsp[-2].statement_t); ((BlockStatement *)(yyval.statement_t))->addStatement((yyvsp[0].statement_t)); }
-#line 1302 "expr_parser.cpp" /* yacc.c:1646  */
+#line 1306 "expr_parser.cpp" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 58 "expr.y" /* yacc.c:1646  */
+#line 62 "expr.y" /* yacc.c:1646  */
     { (yyval.statement_t) = new BlockStatement; ((BlockStatement*)(yyval.statement_t))->addStatement((yyvsp[0].statement_t)); }
-#line 1308 "expr_parser.cpp" /* yacc.c:1646  */
+#line 1312 "expr_parser.cpp" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 69 "expr.y" /* yacc.c:1646  */
+#line 73 "expr.y" /* yacc.c:1646  */
     { (yyval.statement_t) = (yyvsp[0].statement_t); }
-#line 1314 "expr_parser.cpp" /* yacc.c:1646  */
+#line 1318 "expr_parser.cpp" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 70 "expr.y" /* yacc.c:1646  */
+#line 74 "expr.y" /* yacc.c:1646  */
     { (yyval.statement_t) = (yyvsp[0].statement_t); }
-#line 1320 "expr_parser.cpp" /* yacc.c:1646  */
+#line 1324 "expr_parser.cpp" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 71 "expr.y" /* yacc.c:1646  */
+#line 75 "expr.y" /* yacc.c:1646  */
     { (yyval.statement_t) = (yyvsp[0].statement_t); }
-#line 1326 "expr_parser.cpp" /* yacc.c:1646  */
+#line 1330 "expr_parser.cpp" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 74 "expr.y" /* yacc.c:1646  */
-    { (yyval.statement_t) = new AssignStatement((yyvsp[-2].int_t), (yyvsp[0].expr_t)); }
-#line 1332 "expr_parser.cpp" /* yacc.c:1646  */
+#line 78 "expr.y" /* yacc.c:1646  */
+    { (yyval.statement_t) = new AssignStatement((yyvsp[-2].string_t), (yyvsp[0].expr_t));}
+#line 1336 "expr_parser.cpp" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 77 "expr.y" /* yacc.c:1646  */
+#line 81 "expr.y" /* yacc.c:1646  */
     { (yyval.statement_t) = new PrintStatement((yyvsp[-2].expr_t), (yyvsp[0].int_t)); }
-#line 1338 "expr_parser.cpp" /* yacc.c:1646  */
+#line 1342 "expr_parser.cpp" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 80 "expr.y" /* yacc.c:1646  */
+#line 84 "expr.y" /* yacc.c:1646  */
     {
         (yyval.statement_t) = new IfStatement((yyvsp[-5].expr_t), (yyvsp[-2].statement_t), (yyvsp[0].statement_t));
     }
-#line 1346 "expr_parser.cpp" /* yacc.c:1646  */
+#line 1350 "expr_parser.cpp" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 85 "expr.y" /* yacc.c:1646  */
+#line 89 "expr.y" /* yacc.c:1646  */
     { (yyval.expr_t) = (yyvsp[-1].expr_t); ((BinaryExpr*)(yyval.expr_t))->expr1 = (yyvsp[-2].expr_t); ((BinaryExpr*)(yyval.expr_t))->expr2 = (yyvsp[0].expr_t); }
-#line 1352 "expr_parser.cpp" /* yacc.c:1646  */
+#line 1356 "expr_parser.cpp" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 88 "expr.y" /* yacc.c:1646  */
+#line 92 "expr.y" /* yacc.c:1646  */
     { (yyval.expr_t) = new EqualExpr; }
-#line 1358 "expr_parser.cpp" /* yacc.c:1646  */
+#line 1362 "expr_parser.cpp" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 89 "expr.y" /* yacc.c:1646  */
+#line 93 "expr.y" /* yacc.c:1646  */
     { (yyval.expr_t) = new NotEqualExpr; }
-#line 1364 "expr_parser.cpp" /* yacc.c:1646  */
+#line 1368 "expr_parser.cpp" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 90 "expr.y" /* yacc.c:1646  */
+#line 94 "expr.y" /* yacc.c:1646  */
     { (yyval.expr_t) = new GreaterThanExpr; }
-#line 1370 "expr_parser.cpp" /* yacc.c:1646  */
+#line 1374 "expr_parser.cpp" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 91 "expr.y" /* yacc.c:1646  */
+#line 95 "expr.y" /* yacc.c:1646  */
     { (yyval.expr_t) = new GreaterEqualExpr; }
-#line 1376 "expr_parser.cpp" /* yacc.c:1646  */
+#line 1380 "expr_parser.cpp" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 92 "expr.y" /* yacc.c:1646  */
+#line 96 "expr.y" /* yacc.c:1646  */
     { (yyval.expr_t) = new LessThanExpr; }
-#line 1382 "expr_parser.cpp" /* yacc.c:1646  */
+#line 1386 "expr_parser.cpp" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 93 "expr.y" /* yacc.c:1646  */
+#line 97 "expr.y" /* yacc.c:1646  */
     { (yyval.expr_t) = new LessEqualExpr; }
-#line 1388 "expr_parser.cpp" /* yacc.c:1646  */
+#line 1392 "expr_parser.cpp" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 96 "expr.y" /* yacc.c:1646  */
+#line 100 "expr.y" /* yacc.c:1646  */
     { (yyval.statement_t) = new BlockStatement; ((BlockStatement*)(yyval.statement_t))->addStatement((yyvsp[0].statement_t)); }
-#line 1394 "expr_parser.cpp" /* yacc.c:1646  */
+#line 1398 "expr_parser.cpp" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 97 "expr.y" /* yacc.c:1646  */
+#line 101 "expr.y" /* yacc.c:1646  */
     { (yyval.statement_t) = (yyvsp[-2].statement_t); }
-#line 1400 "expr_parser.cpp" /* yacc.c:1646  */
+#line 1404 "expr_parser.cpp" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 100 "expr.y" /* yacc.c:1646  */
+#line 104 "expr.y" /* yacc.c:1646  */
     { (yyval.statement_t) = new BlockStatement; ((BlockStatement*)(yyval.statement_t))->addStatement((yyvsp[0].statement_t)); }
-#line 1406 "expr_parser.cpp" /* yacc.c:1646  */
+#line 1410 "expr_parser.cpp" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 101 "expr.y" /* yacc.c:1646  */
+#line 105 "expr.y" /* yacc.c:1646  */
     { (yyval.statement_t) = NULL; }
-#line 1412 "expr_parser.cpp" /* yacc.c:1646  */
+#line 1416 "expr_parser.cpp" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 104 "expr.y" /* yacc.c:1646  */
+#line 108 "expr.y" /* yacc.c:1646  */
     { (yyval.int_t) = 0; }
-#line 1418 "expr_parser.cpp" /* yacc.c:1646  */
+#line 1422 "expr_parser.cpp" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 105 "expr.y" /* yacc.c:1646  */
+#line 109 "expr.y" /* yacc.c:1646  */
     { (yyval.int_t) = 1; }
-#line 1424 "expr_parser.cpp" /* yacc.c:1646  */
+#line 1428 "expr_parser.cpp" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 106 "expr.y" /* yacc.c:1646  */
+#line 110 "expr.y" /* yacc.c:1646  */
     { (yyval.int_t) = 2; }
-#line 1430 "expr_parser.cpp" /* yacc.c:1646  */
+#line 1434 "expr_parser.cpp" /* yacc.c:1646  */
     break;
 
   case 29:
-#line 109 "expr.y" /* yacc.c:1646  */
+#line 113 "expr.y" /* yacc.c:1646  */
     { (yyval.expr_t) = new AddExpr((yyvsp[-2].expr_t), (yyvsp[0].expr_t)); }
-#line 1436 "expr_parser.cpp" /* yacc.c:1646  */
+#line 1440 "expr_parser.cpp" /* yacc.c:1646  */
     break;
 
   case 30:
-#line 110 "expr.y" /* yacc.c:1646  */
+#line 114 "expr.y" /* yacc.c:1646  */
     { (yyval.expr_t) = new SubExpr((yyvsp[-2].expr_t), (yyvsp[0].expr_t)); }
-#line 1442 "expr_parser.cpp" /* yacc.c:1646  */
+#line 1446 "expr_parser.cpp" /* yacc.c:1646  */
     break;
 
   case 31:
-#line 111 "expr.y" /* yacc.c:1646  */
+#line 115 "expr.y" /* yacc.c:1646  */
     { (yyval.expr_t) = (yyvsp[0].expr_t); }
-#line 1448 "expr_parser.cpp" /* yacc.c:1646  */
+#line 1452 "expr_parser.cpp" /* yacc.c:1646  */
     break;
 
   case 32:
-#line 114 "expr.y" /* yacc.c:1646  */
+#line 118 "expr.y" /* yacc.c:1646  */
     { (yyval.expr_t) = new MulExpr((yyvsp[-2].expr_t), (yyvsp[0].expr_t)); }
-#line 1454 "expr_parser.cpp" /* yacc.c:1646  */
+#line 1458 "expr_parser.cpp" /* yacc.c:1646  */
     break;
 
   case 33:
-#line 115 "expr.y" /* yacc.c:1646  */
+#line 119 "expr.y" /* yacc.c:1646  */
     { (yyval.expr_t) = new DivExpr((yyvsp[-2].expr_t), (yyvsp[0].expr_t)); }
-#line 1460 "expr_parser.cpp" /* yacc.c:1646  */
+#line 1464 "expr_parser.cpp" /* yacc.c:1646  */
     break;
 
   case 34:
-#line 116 "expr.y" /* yacc.c:1646  */
+#line 120 "expr.y" /* yacc.c:1646  */
     { (yyval.expr_t) = (yyvsp[0].expr_t); }
-#line 1466 "expr_parser.cpp" /* yacc.c:1646  */
+#line 1470 "expr_parser.cpp" /* yacc.c:1646  */
     break;
 
   case 35:
-#line 119 "expr.y" /* yacc.c:1646  */
+#line 123 "expr.y" /* yacc.c:1646  */
     { (yyval.expr_t) = new NumberExpr((yyvsp[0].int_t)); }
-#line 1472 "expr_parser.cpp" /* yacc.c:1646  */
+#line 1476 "expr_parser.cpp" /* yacc.c:1646  */
     break;
 
   case 36:
-#line 120 "expr.y" /* yacc.c:1646  */
-    { (yyval.expr_t) = new VarExpr((yyvsp[0].int_t)); }
-#line 1478 "expr_parser.cpp" /* yacc.c:1646  */
+#line 124 "expr.y" /* yacc.c:1646  */
+    { (yyval.expr_t) = new VarExpr((yyvsp[0].string_t)); }
+#line 1482 "expr_parser.cpp" /* yacc.c:1646  */
     break;
 
   case 37:
-#line 121 "expr.y" /* yacc.c:1646  */
+#line 125 "expr.y" /* yacc.c:1646  */
     { (yyval.expr_t) = (yyvsp[-1].expr_t); }
-#line 1484 "expr_parser.cpp" /* yacc.c:1646  */
+#line 1488 "expr_parser.cpp" /* yacc.c:1646  */
     break;
 
 
-#line 1488 "expr_parser.cpp" /* yacc.c:1646  */
+#line 1492 "expr_parser.cpp" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
