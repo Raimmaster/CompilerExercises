@@ -14,7 +14,9 @@ if( num == 1000)
 {
     num = 900
     print num, dec
-}else
+}
+//ella = 5
+else
     if(num < 1000)
         if(num == 101)
             num = 240

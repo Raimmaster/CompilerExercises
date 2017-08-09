@@ -61,7 +61,7 @@
                                         yyterminate();
                                     }
                                 }
-.                               { return TK_ERROR; }
+.                               {printf("%02x '%c' invalid char\n ", (int)yytext[0], yytext[0]); return TK_ERROR; }
 <include>[\"<][^\"\n]+[\">]     {
                                     {
                                         int c;

@@ -1029,7 +1029,7 @@ case YY_STATE_EOF(eol):
 case 30:
 YY_RULE_SETUP
 #line 64 "expression.l"
-{ return TK_ERROR; }
+{printf("%02x '%c' invalid char\n ", (int)yytext[0], yytext[0]); return TK_ERROR; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
