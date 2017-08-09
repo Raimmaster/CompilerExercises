@@ -18,7 +18,7 @@ void yyerror(const char* msg)
 #define YYERROR_VERBOSE 1
 
 %}
-%expect 1
+/*%expect 1*/
 %union {
     Statement* statement_t;
     Expr* expr_t;
@@ -58,15 +58,11 @@ void yyerror(const char* msg)
 code: optional_eol statement_list optional_eol { $2->exec(); }
 ;
 
-statement_list: statement_list eol_list statement { $$ = $1; ((BlockStatement *)$$)->addStatement($3); }
+statement_list: statement_list TK_EOL statement { $$ = $1; ((BlockStatement *)$$)->addStatement($3); }
     | statement     { $$ = new BlockStatement; ((BlockStatement*)$$)->addStatement($1); }
 ;
 
-eol_list: eol_list TK_EOL
-    | TK_EOL
-;
-
-optional_eol: eol_list
+optional_eol: TK_EOL
     |
 ;
 
@@ -81,7 +77,7 @@ assign_statement: TK_ID TK_EQ expr_op { $$ = new AssignStatement($1, $3); delete
 print_statement: TK_PRINT expr_op TK_COMMA format_expr { $$ = new PrintStatement($2, $4); }
 ;
 
-conditional_statement: KW_IF TK_LEFT_PAR conditional_expression TK_RIGHT_PAR eol_list block_statement optional_else {
+conditional_statement: KW_IF TK_LEFT_PAR conditional_expression TK_RIGHT_PAR TK_EOL block_statement optional_else  {
         $$ = new IfStatement($3, $6, $7);
     }
 ;
@@ -98,11 +94,11 @@ compare_ops: TK_COMPARE { $$ = new EqualExpr; }
 ;
 
 block_statement: statement                  { $$ = new BlockStatement; ((BlockStatement*)$$)->addStatement($1); }
-    | TK_LEFT_CURLY_BRACK eol_list statement_list optional_eol TK_RIGHT_CURLY_BRACK  { $$ = $3; }
+    | TK_LEFT_CURLY_BRACK TK_EOL statement_list optional_eol TK_RIGHT_CURLY_BRACK  { $$ = $3; }
 ;
 
-optional_else: KW_ELSE eol_list block_statement  { $$ = new BlockStatement; ((BlockStatement*)$$)->addStatement($3); }
-    |                                            { $$ = NULL; }
+optional_else: KW_ELSE TK_EOL block_statement  { $$ = new BlockStatement; ((BlockStatement*)$$)->addStatement($3); }
+    |                                          { $$ = NULL; }
 ;
 
 format_expr:  KW_HEX            { $$ = 0; }

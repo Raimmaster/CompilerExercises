@@ -3,24 +3,24 @@
 */
 //print 128, bin
 
-uno = 100
-print uno, dec
+num = 101
+print num, dec
 //Comentario 1
-dos = 32
-print dos, hex
+otro = 32
+print otro, hex
 //#include "input2.txt"
 
-if( uno == 1000)
+if( num == 1000)
 {
-    uno = 900
-    print uno, dec
-} else
-    if(uno < 1000)
-        if(uno == 1100)
-            uno = 240
+    num = 900
+    print num, dec
+}else
+    if(num < 1000)
+        if(num == 101)
+            num = 240
     else
-        dos = 1
-print uno, dec
-print (dos + 10), dec
+        otro = 1
+//print ella, dec
+print (otro + 10), dec
 //print 150, dec
 // Comentario 2

@@ -1,6 +1,7 @@
 %option noyywrap
 %option yylineno
 %x comment
+%x comment_in_eol
 %x include
 %x eol
 
@@ -21,12 +22,13 @@
   int push_file(char*);
   int pop_file();
   char * trim(char* s, char* val);
+  extern void yyerror(const char*);
 %}
 
 %%
 [ \t]+                          { /* NADA */ }
 "/*"                            { BEGIN(comment); }
-"//".*\n                        { return TK_EOL; }
+"//".*\n                        { BEGIN(eol); }
 ^"#"[ \t]*"include"[ \t]*       { BEGIN(include); }
 "+"                             { return OP_ADD; }
 "-"                             { return OP_SUB; }
@@ -49,7 +51,7 @@
 "dec"                           { return KW_DEC; }
 "bin"                           { return KW_BIN; }
 "if"                            { return KW_IF; }
-"else"                          { return KW_ELSE; }
+"else"                          { yyerror("Keyword 'else' unexpected here."); return KW_ELSE; }
 [_a-zA-Z][a-zA-Z0-9_]*          { yylval.string_t = new string(yytext); return TK_ID; }
 [0-9]+                          { yylval.int_t = atoi(yytext); return TK_NUMBER; }
 "\n"                            { BEGIN(eol); }
@@ -111,9 +113,15 @@
 <comment>.|\n                   { /* Nothing */ }
 <eol>\n                         { /* Nothing */ }
 <eol>"//".*\n                   { /* Nothing */ }
+<eol>"/*"                       { BEGIN(comment_in_eol); }
 <eol>[ \t]                      { /* Nothing */ }
 <eol>"else"                     { BEGIN(INITIAL); return KW_ELSE; }
+<eol>^"#"[ \t]*"include"[ \t]*  { BEGIN(include); return TK_EOL; }
+<eol><<EOF>>                    { BEGIN(INITIAL); return TK_EOL; }
 <eol>.                          { BEGIN(INITIAL); unput(yytext[0]); return TK_EOL; }
+
+<comment_in_eol>"*/"            { BEGIN(eol); }
+<comment_in_eol>\n              { /* Nothing */ }
 %%
 
 int push_file(char *filename)
