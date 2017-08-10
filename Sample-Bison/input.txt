@@ -15,14 +15,14 @@ if( num == 1000)
     num = 900
     print num, dec
 }
-//ella = 5
 else
-    if(num < 1000)
+    if(num < 900)
         if(num == 101)
             num = 240
-    else
-        otro = 1
+        else
+            otro = 1
 //print ella, dec
+print num, dec
 print (otro + 10), dec
 //print 150, dec
 // Comentario 2

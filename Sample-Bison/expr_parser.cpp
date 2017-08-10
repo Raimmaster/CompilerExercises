@@ -263,10 +263,10 @@ static const unsigned char yytranslate[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const unsigned char yyrline[] =
 {
-       0,    59,    59,    62,    63,    66,    67,    70,    71,    72,
-      75,    78,    81,    83,    87,    90,    91,    92,    93,    94,
-      95,    98,    99,   106,   107,   108,   111,   112,   113,   116,
-     117,   118,   121,   122,   123
+       0,    58,    58,    61,    62,    65,    66,    69,    70,    71,
+      74,    77,    80,    82,    86,    89,    90,    91,    92,    93,
+      94,    97,    98,   101,   102,   103,   106,   107,   108,   111,
+     112,   113,   116,   117,   118
 };
 #endif
 
@@ -390,7 +390,7 @@ static const unsigned char yyr2[] =
 static const unsigned char yydprec[] =
 {
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     1,     2,     0,     0,     0,     0,     0,     0,
+       0,     0,     2,     1,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0
 };
@@ -843,187 +843,187 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
   switch (yyn)
     {
         case 2:
-#line 59 "expr.y" /* glr.c:783  */
+#line 58 "expr.y" /* glr.c:783  */
     { (((yyGLRStackItem const *)yyvsp)[YYFILL (-1)].yystate.yysemantics.yysval.statement_t)->exec(); }
 #line 849 "expr_parser.cpp" /* glr.c:783  */
     break;
 
   case 3:
-#line 62 "expr.y" /* glr.c:783  */
+#line 61 "expr.y" /* glr.c:783  */
     { ((*yyvalp).statement_t) = (((yyGLRStackItem const *)yyvsp)[YYFILL (-2)].yystate.yysemantics.yysval.statement_t); ((BlockStatement *)((*yyvalp).statement_t))->addStatement((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.statement_t)); }
 #line 855 "expr_parser.cpp" /* glr.c:783  */
     break;
 
   case 4:
-#line 63 "expr.y" /* glr.c:783  */
+#line 62 "expr.y" /* glr.c:783  */
     { ((*yyvalp).statement_t) = new BlockStatement; ((BlockStatement*)((*yyvalp).statement_t))->addStatement((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.statement_t)); }
 #line 861 "expr_parser.cpp" /* glr.c:783  */
     break;
 
   case 7:
-#line 70 "expr.y" /* glr.c:783  */
+#line 69 "expr.y" /* glr.c:783  */
     { ((*yyvalp).statement_t) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.statement_t); }
 #line 867 "expr_parser.cpp" /* glr.c:783  */
     break;
 
   case 8:
-#line 71 "expr.y" /* glr.c:783  */
+#line 70 "expr.y" /* glr.c:783  */
     { ((*yyvalp).statement_t) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.statement_t); }
 #line 873 "expr_parser.cpp" /* glr.c:783  */
     break;
 
   case 9:
-#line 72 "expr.y" /* glr.c:783  */
+#line 71 "expr.y" /* glr.c:783  */
     { ((*yyvalp).statement_t) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.statement_t); }
 #line 879 "expr_parser.cpp" /* glr.c:783  */
     break;
 
   case 10:
-#line 75 "expr.y" /* glr.c:783  */
+#line 74 "expr.y" /* glr.c:783  */
     { ((*yyvalp).statement_t) = new AssignStatement((((yyGLRStackItem const *)yyvsp)[YYFILL (-2)].yystate.yysemantics.yysval.string_t), (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.expr_t)); delete (((yyGLRStackItem const *)yyvsp)[YYFILL (-2)].yystate.yysemantics.yysval.string_t);}
 #line 885 "expr_parser.cpp" /* glr.c:783  */
     break;
 
   case 11:
-#line 78 "expr.y" /* glr.c:783  */
+#line 77 "expr.y" /* glr.c:783  */
     { ((*yyvalp).statement_t) = new PrintStatement((((yyGLRStackItem const *)yyvsp)[YYFILL (-2)].yystate.yysemantics.yysval.expr_t), (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.int_t)); }
 #line 891 "expr_parser.cpp" /* glr.c:783  */
     break;
 
   case 12:
-#line 82 "expr.y" /* glr.c:783  */
+#line 81 "expr.y" /* glr.c:783  */
     { ((*yyvalp).statement_t) = new IfStatement((((yyGLRStackItem const *)yyvsp)[YYFILL (-3)].yystate.yysemantics.yysval.expr_t), (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.statement_t), NULL); }
 #line 897 "expr_parser.cpp" /* glr.c:783  */
     break;
 
   case 13:
-#line 84 "expr.y" /* glr.c:783  */
+#line 83 "expr.y" /* glr.c:783  */
     { ((*yyvalp).statement_t) = new IfStatement((((yyGLRStackItem const *)yyvsp)[YYFILL (-6)].yystate.yysemantics.yysval.expr_t), (((yyGLRStackItem const *)yyvsp)[YYFILL (-3)].yystate.yysemantics.yysval.statement_t), (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.statement_t)); }
 #line 903 "expr_parser.cpp" /* glr.c:783  */
     break;
 
   case 14:
-#line 87 "expr.y" /* glr.c:783  */
+#line 86 "expr.y" /* glr.c:783  */
     { ((*yyvalp).expr_t) = (((yyGLRStackItem const *)yyvsp)[YYFILL (-1)].yystate.yysemantics.yysval.expr_t); ((BinaryExpr*)((*yyvalp).expr_t))->expr1 = (((yyGLRStackItem const *)yyvsp)[YYFILL (-2)].yystate.yysemantics.yysval.expr_t); ((BinaryExpr*)((*yyvalp).expr_t))->expr2 = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.expr_t); }
 #line 909 "expr_parser.cpp" /* glr.c:783  */
     break;
 
   case 15:
-#line 90 "expr.y" /* glr.c:783  */
+#line 89 "expr.y" /* glr.c:783  */
     { ((*yyvalp).expr_t) = new EqualExpr; }
 #line 915 "expr_parser.cpp" /* glr.c:783  */
     break;
 
   case 16:
-#line 91 "expr.y" /* glr.c:783  */
+#line 90 "expr.y" /* glr.c:783  */
     { ((*yyvalp).expr_t) = new NotEqualExpr; }
 #line 921 "expr_parser.cpp" /* glr.c:783  */
     break;
 
   case 17:
-#line 92 "expr.y" /* glr.c:783  */
+#line 91 "expr.y" /* glr.c:783  */
     { ((*yyvalp).expr_t) = new GreaterThanExpr; }
 #line 927 "expr_parser.cpp" /* glr.c:783  */
     break;
 
   case 18:
-#line 93 "expr.y" /* glr.c:783  */
+#line 92 "expr.y" /* glr.c:783  */
     { ((*yyvalp).expr_t) = new GreaterEqualExpr; }
 #line 933 "expr_parser.cpp" /* glr.c:783  */
     break;
 
   case 19:
-#line 94 "expr.y" /* glr.c:783  */
+#line 93 "expr.y" /* glr.c:783  */
     { ((*yyvalp).expr_t) = new LessThanExpr; }
 #line 939 "expr_parser.cpp" /* glr.c:783  */
     break;
 
   case 20:
-#line 95 "expr.y" /* glr.c:783  */
+#line 94 "expr.y" /* glr.c:783  */
     { ((*yyvalp).expr_t) = new LessEqualExpr; }
 #line 945 "expr_parser.cpp" /* glr.c:783  */
     break;
 
   case 21:
-#line 98 "expr.y" /* glr.c:783  */
+#line 97 "expr.y" /* glr.c:783  */
     { ((*yyvalp).statement_t) = new BlockStatement; ((BlockStatement*)((*yyvalp).statement_t))->addStatement((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.statement_t)); }
 #line 951 "expr_parser.cpp" /* glr.c:783  */
     break;
 
   case 22:
-#line 99 "expr.y" /* glr.c:783  */
+#line 98 "expr.y" /* glr.c:783  */
     { ((*yyvalp).statement_t) = (((yyGLRStackItem const *)yyvsp)[YYFILL (-2)].yystate.yysemantics.yysval.statement_t); }
 #line 957 "expr_parser.cpp" /* glr.c:783  */
     break;
 
   case 23:
-#line 106 "expr.y" /* glr.c:783  */
+#line 101 "expr.y" /* glr.c:783  */
     { ((*yyvalp).int_t) = 0; }
 #line 963 "expr_parser.cpp" /* glr.c:783  */
     break;
 
   case 24:
-#line 107 "expr.y" /* glr.c:783  */
+#line 102 "expr.y" /* glr.c:783  */
     { ((*yyvalp).int_t) = 1; }
 #line 969 "expr_parser.cpp" /* glr.c:783  */
     break;
 
   case 25:
-#line 108 "expr.y" /* glr.c:783  */
+#line 103 "expr.y" /* glr.c:783  */
     { ((*yyvalp).int_t) = 2; }
 #line 975 "expr_parser.cpp" /* glr.c:783  */
     break;
 
   case 26:
-#line 111 "expr.y" /* glr.c:783  */
+#line 106 "expr.y" /* glr.c:783  */
     { ((*yyvalp).expr_t) = new AddExpr((((yyGLRStackItem const *)yyvsp)[YYFILL (-2)].yystate.yysemantics.yysval.expr_t), (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.expr_t)); }
 #line 981 "expr_parser.cpp" /* glr.c:783  */
     break;
 
   case 27:
-#line 112 "expr.y" /* glr.c:783  */
+#line 107 "expr.y" /* glr.c:783  */
     { ((*yyvalp).expr_t) = new SubExpr((((yyGLRStackItem const *)yyvsp)[YYFILL (-2)].yystate.yysemantics.yysval.expr_t), (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.expr_t)); }
 #line 987 "expr_parser.cpp" /* glr.c:783  */
     break;
 
   case 28:
-#line 113 "expr.y" /* glr.c:783  */
+#line 108 "expr.y" /* glr.c:783  */
     { ((*yyvalp).expr_t) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.expr_t); }
 #line 993 "expr_parser.cpp" /* glr.c:783  */
     break;
 
   case 29:
-#line 116 "expr.y" /* glr.c:783  */
+#line 111 "expr.y" /* glr.c:783  */
     { ((*yyvalp).expr_t) = new MulExpr((((yyGLRStackItem const *)yyvsp)[YYFILL (-2)].yystate.yysemantics.yysval.expr_t), (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.expr_t)); }
 #line 999 "expr_parser.cpp" /* glr.c:783  */
     break;
 
   case 30:
-#line 117 "expr.y" /* glr.c:783  */
+#line 112 "expr.y" /* glr.c:783  */
     { ((*yyvalp).expr_t) = new DivExpr((((yyGLRStackItem const *)yyvsp)[YYFILL (-2)].yystate.yysemantics.yysval.expr_t), (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.expr_t)); }
 #line 1005 "expr_parser.cpp" /* glr.c:783  */
     break;
 
   case 31:
-#line 118 "expr.y" /* glr.c:783  */
+#line 113 "expr.y" /* glr.c:783  */
     { ((*yyvalp).expr_t) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.expr_t); }
 #line 1011 "expr_parser.cpp" /* glr.c:783  */
     break;
 
   case 32:
-#line 121 "expr.y" /* glr.c:783  */
+#line 116 "expr.y" /* glr.c:783  */
     { ((*yyvalp).expr_t) = new NumberExpr((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.int_t)); }
 #line 1017 "expr_parser.cpp" /* glr.c:783  */
     break;
 
   case 33:
-#line 122 "expr.y" /* glr.c:783  */
+#line 117 "expr.y" /* glr.c:783  */
     { ((*yyvalp).expr_t) = new VarExpr((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.string_t)); delete (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.string_t);}
 #line 1023 "expr_parser.cpp" /* glr.c:783  */
     break;
 
   case 34:
-#line 123 "expr.y" /* glr.c:783  */
+#line 118 "expr.y" /* glr.c:783  */
     { ((*yyvalp).expr_t) = (((yyGLRStackItem const *)yyvsp)[YYFILL (-1)].yystate.yysemantics.yysval.expr_t); }
 #line 1029 "expr_parser.cpp" /* glr.c:783  */
     break;

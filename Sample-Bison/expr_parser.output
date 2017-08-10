@@ -1,18 +1,7 @@
-Nonterminals useless in grammar
-
-   optional_else
-
-
 Terminals unused in grammar
 
    TK_EOF
    TK_ERROR
-
-
-Rules useless in grammar
-
-   34 optional_else: KW_ELSE TK_EOL block_statement
-   35              | %empty
 
 
 State 54 conflicts: 1 shift/reduce

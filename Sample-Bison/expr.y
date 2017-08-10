@@ -30,7 +30,6 @@ void yyerror(const char* msg)
 %type<statement_t> statement assign_statement print_statement statement_list
 %type<statement_t> conditional_statement
 %type<statement_t> block_statement
-%type<statement_t> optional_else
 %type<expr_t> compare_ops conditional_expression
 %type<expr_t> expr_op term
 %type<expr_t> factor
@@ -79,9 +78,9 @@ print_statement: TK_PRINT expr_op TK_COMMA format_expr { $$ = new PrintStatement
 ;
 
 conditional_statement: KW_IF TK_LEFT_PAR conditional_expression TK_RIGHT_PAR TK_EOL block_statement
-                        { $$ = new IfStatement($3, $6, NULL); } %dprec 1
+                        { $$ = new IfStatement($3, $6, NULL); } %dprec 2
                     |  KW_IF TK_LEFT_PAR conditional_expression TK_RIGHT_PAR TK_EOL block_statement KW_ELSE TK_EOL block_statement
-                        { $$ = new IfStatement($3, $6, $9); } %dprec 2
+                        { $$ = new IfStatement($3, $6, $9); } %dprec 1
 ;
 
 conditional_expression: expr_op compare_ops expr_op { $$ = $2; ((BinaryExpr*)$$)->expr1 = $1; ((BinaryExpr*)$$)->expr2 = $3; }
@@ -97,10 +96,6 @@ compare_ops: TK_COMPARE { $$ = new EqualExpr; }
 
 block_statement: statement                  { $$ = new BlockStatement; ((BlockStatement*)$$)->addStatement($1); }
     | TK_LEFT_CURLY_BRACK TK_EOL statement_list optional_eol TK_RIGHT_CURLY_BRACK  { $$ = $3; }
-;
-
-optional_else: KW_ELSE TK_EOL block_statement  { $$ = new BlockStatement; ((BlockStatement*)$$)->addStatement($3); }
-    |                                          { $$ = NULL; }
 ;
 
 format_expr:  KW_HEX            { $$ = 0; }
