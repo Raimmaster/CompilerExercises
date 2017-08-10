@@ -16,8 +16,9 @@ void yyerror(const char* msg)
 }
 
 #define YYERROR_VERBOSE 1
-
+#define YYDEBUG         1
 %}
+%glr-parser
 /*%expect 1*/
 %union {
     Statement* statement_t;
@@ -77,9 +78,10 @@ assign_statement: TK_ID TK_EQ expr_op { $$ = new AssignStatement($1, $3); delete
 print_statement: TK_PRINT expr_op TK_COMMA format_expr { $$ = new PrintStatement($2, $4); }
 ;
 
-conditional_statement: KW_IF TK_LEFT_PAR conditional_expression TK_RIGHT_PAR TK_EOL block_statement optional_else  {
-        $$ = new IfStatement($3, $6, $7);
-    }
+conditional_statement: KW_IF TK_LEFT_PAR conditional_expression TK_RIGHT_PAR TK_EOL block_statement
+                        { $$ = new IfStatement($3, $6, NULL); } %dprec 1
+                    |  KW_IF TK_LEFT_PAR conditional_expression TK_RIGHT_PAR TK_EOL block_statement KW_ELSE TK_EOL block_statement
+                        { $$ = new IfStatement($3, $6, $9); } %dprec 2
 ;
 
 conditional_expression: expr_op compare_ops expr_op { $$ = $2; ((BinaryExpr*)$$)->expr1 = $1; ((BinaryExpr*)$$)->expr2 = $3; }

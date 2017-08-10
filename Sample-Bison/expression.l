@@ -29,7 +29,7 @@
 [ \t]+                          { /* NADA */ }
 "/*"                            { BEGIN(comment); }
 "//".*\n                        { BEGIN(eol); }
-^"#"[ \t]*"include"[ \t]*       { BEGIN(include); }
+"#"[ \t]*"include"[ \t]*        { BEGIN(include); }
 "+"                             { return OP_ADD; }
 "-"                             { return OP_SUB; }
 "/"                             { return OP_DIV; }
@@ -62,6 +62,7 @@
                                     }
                                 }
 .                               {printf("%02x '%c' invalid char\n ", (int)yytext[0], yytext[0]); return TK_ERROR; }
+
 <include>[\"<][^\"\n]+[\">]     {
                                     {
                                         int c;
