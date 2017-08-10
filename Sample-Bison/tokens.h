@@ -86,7 +86,7 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 22 "expr.y" /* yacc.c:1909  */
+#line 21 "expr.y" /* yacc.c:1909  */
 
     Statement* statement_t;
     Expr* expr_t;

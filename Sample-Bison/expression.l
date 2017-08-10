@@ -70,7 +70,8 @@
                                         char* filename = (char*)malloc(sizeof(char) * (len + 1));
                                         memset(filename, '\0', len);
                                         strncpy(filename, original_text, len);
-                                        filename = trim(filename, " ");
+                                        char* char_to_del = new char(' ');
+                                        filename = trim(filename, char_to_del);
                                         char init_char = filename[0];
                                         char final_char = filename[len-1];
                                         if(init_char != final_char)
@@ -89,11 +90,14 @@
                                         }
                                         if(init_char == '"')
                                         {
-                                            filename = trim(filename, "\"");
+                                            *char_to_del = '"';
+                                            filename = trim(filename, char_to_del);
                                         }else
                                         {
-                                            filename = trim(filename, "<");
-                                            filename = trim(filename, ">");
+                                            *char_to_del = '<';
+                                            filename = trim(filename, char_to_del);
+                                            *char_to_del = '>';
+                                            filename = trim(filename, char_to_del);
                                         }
                                         if(push_file(filename) != 0)
                                         {
@@ -101,6 +105,7 @@
                                             yyterminate();
                                         }
                                         free(filename);
+                                        delete char_to_del;
                                         BEGIN(INITIAL);
                                     }
                                 }

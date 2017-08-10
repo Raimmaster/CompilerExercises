@@ -18,7 +18,6 @@ void yyerror(const char* msg)
 #define YYERROR_VERBOSE 1
 
 %}
-/*%expect 1*/
 %union {
     Statement* statement_t;
     Expr* expr_t;

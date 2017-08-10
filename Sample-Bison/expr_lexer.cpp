@@ -1042,7 +1042,8 @@ YY_RULE_SETUP
                                         char* filename = (char*)malloc(sizeof(char) * (len + 1));
                                         memset(filename, '\0', len);
                                         strncpy(filename, original_text, len);
-                                        filename = trim(filename, " ");
+                                        char* char_to_del = new char(' ');
+                                        filename = trim(filename, char_to_del);
                                         char init_char = filename[0];
                                         char final_char = filename[len-1];
                                         if(init_char != final_char)
@@ -1061,11 +1062,14 @@ YY_RULE_SETUP
                                         }
                                         if(init_char == '"')
                                         {
-                                            filename = trim(filename, "\"");
+                                            *char_to_del = '"';
+                                            filename = trim(filename, char_to_del);
                                         }else
                                         {
-                                            filename = trim(filename, "<");
-                                            filename = trim(filename, ">");
+                                            *char_to_del = '<';
+                                            filename = trim(filename, char_to_del);
+                                            *char_to_del = '>';
+                                            filename = trim(filename, char_to_del);
                                         }
                                         if(push_file(filename) != 0)
                                         {
@@ -1073,6 +1077,7 @@ YY_RULE_SETUP
                                             yyterminate();
                                         }
                                         free(filename);
+                                        delete char_to_del;
                                         BEGIN(INITIAL);
                                     }
                                 }
@@ -1080,7 +1085,7 @@ YY_RULE_SETUP
 case 32:
 /* rule 32 can match eol */
 YY_RULE_SETUP
-#line 107 "expression.l"
+#line 112 "expression.l"
 {
                                     fprintf(stderr, "Bad included line at : %d \n", yylineno);
                                     yyterminate();
@@ -1088,75 +1093,75 @@ YY_RULE_SETUP
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 111 "expression.l"
+#line 116 "expression.l"
 { BEGIN(INITIAL); }
 	YY_BREAK
-#line 112 "expression.l"
+#line 117 "expression.l"
 { printf("Line: %d: Block comment without end.\n", yylineno); return 0;}
 	YY_BREAK
 case 34:
 /* rule 34 can match eol */
 YY_RULE_SETUP
-#line 113 "expression.l"
+#line 118 "expression.l"
 { /* Nothing */ }
 	YY_BREAK
 case 35:
 /* rule 35 can match eol */
 YY_RULE_SETUP
-#line 114 "expression.l"
+#line 119 "expression.l"
 { /* Nothing */ }
 	YY_BREAK
 case 36:
 /* rule 36 can match eol */
 YY_RULE_SETUP
-#line 115 "expression.l"
+#line 120 "expression.l"
 { /* Nothing */ }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 116 "expression.l"
+#line 121 "expression.l"
 { BEGIN(comment_in_eol); }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 117 "expression.l"
+#line 122 "expression.l"
 { /* Nothing */ }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 118 "expression.l"
+#line 123 "expression.l"
 { BEGIN(INITIAL); return KW_ELSE; }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 119 "expression.l"
+#line 124 "expression.l"
 { BEGIN(include); return TK_EOL; }
 	YY_BREAK
-#line 120 "expression.l"
+#line 125 "expression.l"
 { BEGIN(INITIAL); return TK_EOL; }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 121 "expression.l"
+#line 126 "expression.l"
 { BEGIN(INITIAL); unput(yytext[0]); return TK_EOL; }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 123 "expression.l"
+#line 128 "expression.l"
 { BEGIN(eol); }
 	YY_BREAK
 case 43:
 /* rule 43 can match eol */
 YY_RULE_SETUP
-#line 124 "expression.l"
+#line 129 "expression.l"
 { /* Nothing */ }
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 125 "expression.l"
+#line 130 "expression.l"
 ECHO;
 	YY_BREAK
-#line 1160 "expr_lexer.cpp"
+#line 1165 "expr_lexer.cpp"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -2166,7 +2171,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 125 "expression.l"
+#line 130 "expression.l"
 
 
 
