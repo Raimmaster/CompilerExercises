@@ -126,7 +126,7 @@
 <eol>.                          { BEGIN(INITIAL); unput(yytext[0]); return TK_EOL; }
 
 <comment_in_eol>"*/"            { BEGIN(eol); }
-<comment_in_eol>\n              { /* Nothing */ }
+<comment_in_eol>.|\n            { /* Nothing */ }
 %%
 
 int push_file(char *filename)

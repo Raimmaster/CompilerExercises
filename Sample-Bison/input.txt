@@ -14,10 +14,8 @@ if( num == 1000)
 {
     num = 900
     print num, dec
-}
-//ella = 5
-/*
-El val: 
+}/*
+                                                El val:
 */
 else
     if(num < 900)
