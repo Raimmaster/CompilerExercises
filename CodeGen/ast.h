@@ -31,7 +31,7 @@ public:
     }
     ~Token()
     {
-
+        delete lexem;
     }
     string* lexem;
     int val;
