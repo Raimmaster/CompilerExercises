@@ -4,10 +4,12 @@
 #include <map>
 #include <list>
 #include <string>
+#include "utils.h"
 #include <iostream>
 #include <stdio.h>
 #include <sstream>
 #include <string.h>
+#include "controllers.h"
 using namespace std;
 
 #define SIZE_FLAGS 10
@@ -20,33 +22,6 @@ using namespace std;
         string generate(); \
     }
 
-
-class Token{
-public:
-    Token() { }
-    Token(string* lexem, int code)
-    {
-        this->lexem = lexem;
-        this->val = code;
-    }
-    ~Token()
-    {
-        delete lexem;
-    }
-    string* lexem;
-    int val;
-};
-
-class Gen {
-public:
-    Gen()
-    {
-        this->code = "";
-        this->place = -1;
-    }
-    string code;
-    int place;
-};
 
 class Expr {//abstract by def
 protected:
@@ -91,38 +66,6 @@ public:
     }
     string index;
     string generate();
-};
-
-class RegisterControl
-{
-public:
-    RegisterControl()
-    {
-        for (unsigned int i = 0; i < SIZE_FLAGS; i++) {
-            flags[i] = false;
-        }
-    }
-
-    int getNext()
-    {
-        for(unsigned int i = 0; i < SIZE_FLAGS; ++i)
-        {
-            if(!flags[i])
-            {
-                flags[i] = true;
-                return i;
-            }
-        }
-
-        return -1;
-    }
-
-    void freePlace(int place)
-    {
-        flags[place] = false;
-    }
-
-    bool flags[SIZE_FLAGS];
 };
 
 DEFINE_BINARY_EXPR(Add);

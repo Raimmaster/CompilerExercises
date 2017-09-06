@@ -1,7 +1,7 @@
 TARGET=codegen.o
 EXPR_PARSER=expr_parser.cpp
 EXPR_LEXER=expr_lexer.cpp
-SRC_FILES=$(EXPR_PARSER) $(EXPR_LEXER) ast.cpp main.cpp
+SRC_FILES=$(EXPR_PARSER) $(EXPR_LEXER) controllers.cpp ast.cpp main.cpp
 OBJ_FILES=$(SRC_FILES:.cpp=.o)
 RM=rm -rf
 .PHONY: clean
