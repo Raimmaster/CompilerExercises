@@ -1,49 +1,59 @@
 #ifndef _AST_H
 #define _AST_H
 
+#include <map>
 #include <list>
 #include <string>
+#include <iostream>
 #include <stdio.h>
 #include <sstream>
 #include <string.h>
-#include <map>
 using namespace std;
+
+#define SIZE_FLAGS 10
 
 #define DEFINE_BINARY_EXPR(name) \
     class name##Expr : public BinaryExpr { \
     public:                                 \
         name##Expr(Expr* expr1, Expr* expr2) : BinaryExpr(expr1, expr2) {} \
         name##Expr() : BinaryExpr() {}                                      \
-        int eval(); \
+        string generate(); \
     }
+
 
 class Token{
 public:
-    Token()
-    {
-
-    }
+    Token() { }
     Token(string* lexem, int code)
     {
         this->lexem = lexem;
-        this->code = code;
+        this->val = code;
     }
     ~Token()
     {
-        printf("Destroying the token of code: %d\n", code);
+
     }
     string* lexem;
-    int code;
+    int val;
+};
+
+class Gen {
+public:
+    Gen()
+    {
+        this->code = "";
+        this->place = -1;
+    }
+    string code;
+    int place;
 };
 
 class Expr {//abstract by def
 protected:
-    Expr()
-    {
-
-    }
+    Expr() { }
+    ~Expr() { }
 public:
-    // virtual int eval() = 0;
+    Gen mips_code;
     virtual string generate() = 0;
 };
 
@@ -58,22 +68,21 @@ protected:
     BinaryExpr(){}
 public:
     Expr *expr1, *expr2;
-
 };
 
 class NumberExpr : public Expr {
 public:
-    NumberExpr(int value)
+    NumberExpr(int value) : Expr()
     {
         this->value = value;
     }
+    ~NumberExpr() { }
     int value;
-    int eval()
-    {
-        return value;
-    }
+    string generate();
 };
+
 //RTTI: RunTime Type Info
+
 class VarExpr : public Expr {
 public:
     VarExpr(string* index)
@@ -81,51 +90,42 @@ public:
         this->index = *index;
     }
     string index;
-    // int eval();
     string generate();
 };
 
-class Statement {
-protected:
-    Statement()
-    {
-
-    }
+class RegisterControl
+{
 public:
-    // virtual void exec() = 0;
-    virtual string generate() = 0;
-};
-
-class AssignStatement : public Statement {
-public:
-    AssignStatement(string* index, Expr *expr) : Statement()
+    RegisterControl()
     {
-        this->index = *index;
-        this->expr = expr;
-    }
-    // void exec();
-    string generate();
-    string index;
-    Expr*   expr;
-};
-
-class BlockStatement : public Statement {
-public:
-    BlockStatement() {}
-
-    void addStatement(Statement *statement)
-    {
-        statementList.push_back(statement);
+        for (unsigned int i = 0; i < SIZE_FLAGS; i++) {
+            flags[i] = false;
+        }
     }
 
-    // void exec();
-    string generate();
-    list<Statement*> statementList;
+    int getNext()
+    {
+        for(unsigned int i = 0; i < SIZE_FLAGS; ++i)
+        {
+            if(!flags[i])
+            {
+                flags[i] = true;
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    void freePlace(int place)
+    {
+        flags[place] = false;
+    }
+
+    bool flags[SIZE_FLAGS];
 };
-
-
 
 DEFINE_BINARY_EXPR(Add);
 DEFINE_BINARY_EXPR(Sub);
-DEFINE_BINARY_EXPR(Div);
+DEFINE_BINARY_EXPR(Mul);
 #endif
