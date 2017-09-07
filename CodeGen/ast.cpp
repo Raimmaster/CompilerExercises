@@ -75,20 +75,15 @@ string AddExpr::generate()
     string op;
     bool first_reg_is_number = type_expr1 == IMM_EXPR;
     bool second_reg_is_number = type_expr2 == IMM_EXPR;
-    // cout<<"Is reg1: "<<first_reg_is_number<<" and reg2: "<<second_reg_is_number<<endl;
-    printf("R1: %d R2: %d \n", first_reg_is_number, second_reg_is_number);
     if((first_reg_is_number) && (second_reg_is_number))
     {
-        cout<<"My old type: "<<getType()<<endl;
         this->type = IMM_EXPR;
         string empty = ""; 
-        cout<<"L and R are imms"<<endl;
         stringstream st;
         int result = expr1->eval() + expr2->eval();
         mips_code.place = reg_control->getNext();
         code<<"li $t"<<mips_code.place<<", "<<result<<endl;
         mips_code.code = code.str();
-        cout<<"My type: "<<getType()<<endl;
         return mips_code.code;   
     }else if (first_reg_is_number)
     {
@@ -97,7 +92,6 @@ string AddExpr::generate()
         this->mips_code.place = reg_control->getNext();
         code<<v2;
         code<<"addi $t"<<mips_code.place<<", $t"<<expr2->mips_code.place<<", "<<expr1->eval()<<endl;
-        cout<<"L is imm"<<endl;
         this->mips_code.code = code.str();
         return this->mips_code.code;
     }else if (second_reg_is_number)
@@ -107,7 +101,6 @@ string AddExpr::generate()
         this->mips_code.place = reg_control->getNext();
         code<<v1;
         code<<"addi $t"<<mips_code.place<<", $t"<<expr1->mips_code.place<<", "<<expr2->eval()<<endl;
-        cout<<"R is imm"<<endl;       
         this->mips_code.code = code.str(); 
         return this->mips_code.code;
     }
@@ -115,7 +108,6 @@ string AddExpr::generate()
     v2 = expr2->generate();      
     reg_control->freePlace(expr1->mips_code.place); 
     reg_control->freePlace(expr2->mips_code.place); 
-    cout<<"Normal add"<<endl;
     code<<v1<<v2;   
     this->mips_code.place = reg_control->getNext(); 
     code<<"add $t"<<this->mips_code.place<<", $t"<<expr1->mips_code.place<<", $t"<<expr2->mips_code.place<<endl; 
