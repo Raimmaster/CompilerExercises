@@ -19,19 +19,21 @@ enum EXPR_TYPE {
     ADD_EXPR,
     SUB_EXPR,
     MULT_EXPR,
-    VAR_EXPR
-    IMM_EXPR;
-}
+    VAR_EXPR,
+    IMM_EXPR
+};
 
 #define DEFINE_BINARY_EXPR(name, t) \
     class name##Expr : public BinaryExpr { \
     public:                                 \
-        name##Expr(Expr* expr1, Expr* expr2) : BinaryExpr(expr1, expr2) { this->type = t##_EXPR; } \
+        name##Expr(Expr* expr1, Expr* expr2) : BinaryExpr(expr1, expr2) { this->type = this->getType() == IMM_EXPR ? type : t##_EXPR; } \
         name##Expr() : BinaryExpr() {}                                      \
-        string generate(); \
+        int eval();             \
+        string generate();      \
     }
 
-class Expr {//abstract by def
+class Expr 
+{//abstract by def
 protected:
     Expr() { }
     ~Expr() { }
@@ -50,6 +52,11 @@ protected:
     {
         this->expr1 = expr1;
         this->expr2 = expr2;
+        if(expr1->getType() == IMM_EXPR && expr2->getType() == IMM_EXPR)
+        {   
+            cout<<"Calling bin"<<endl;
+            this->type = IMM_EXPR;
+        }
     };
     BinaryExpr(){}
 public:
@@ -61,7 +68,7 @@ public:
     NumberExpr(int value) : Expr()
     {
         this->value = value;
-        this->type = NUM_EXPR;
+        this->type = IMM_EXPR;
     }
     ~NumberExpr() { }
     int value;

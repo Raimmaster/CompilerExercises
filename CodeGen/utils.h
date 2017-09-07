@@ -2,6 +2,8 @@
 #define _UTILS_H
 
 #define SIZE_FLAGS 10
+#include <string>
+using namespace std;
 
 class Token{
 public:
