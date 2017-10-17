@@ -1,0 +1,34 @@
+E->		E+E
+	|	E*E
+	|	NUM
+	|	ID
+	|	(E)
+
+E -> ID		{ E.place = newTemp(); E.code = "lw " + E.place + ", " + ID.lexema; }
+E -> NUM	{ E.place = newTemp(); E.code = "li " + E.place + ", " + NUM.lexema; }
+E -> E1+E2 	{ 
+				E.code = E1.code + "\n" + E2.code + "\n"; 
+				releaseTemp(E1.place); releaseTemp(E2.place);
+				E.place = newPlace(); E.code += "add " + E.place + ", " + E1.place + ", " + E2.place; 
+			}
+
+(4+5)+y
+"li $t0, 4" -> code
+"$t0" 		-> place
+
+"li $t0, 5" -> code
+"$t1"		-> place
+
+"li $t0, 4
+li $t1, 5
+add $t0, $t0, $t1" -> place of expression-A with place of expression-B (code)
+"$t0"	-> place
+
+y "lw $t1, y" -> code
+  "$t1"		  -> place
+
+"li $t0, 4
+li $t1, 5
+add $t0, $t0, $t1
+lw $t1, y
+add $t0, $t0, $t1"

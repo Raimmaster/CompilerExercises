@@ -1,0 +1,40 @@
+#if statements
+
+S-> if (E) {
+	S1
+} else {
+	S2
+}
+
+if E.place is false goto lf  
+	S1.code
+	j endif
+LF:
+	S2.code
+
+endif:
+	{
+		lf = new Label();
+		lendif = new Label();
+		S.code = E.code;
+		S.code += "beqz " + E.place + ", " + lf + S1.code + "j " 
+			+ lendif + lf +":" + S2.code + "lend" + ":\n" ; 
+	}
+
+#while statements
+
+S-> while(E) { S1 }
+{
+	lwhile = new Label();
+	lendwhile = new Label();
+	S.code = lwhile + ": \n" + E.code + " beqz " + E.place + ", " + lendwhile
+		+ S1.code + "j " + lwhile + lendwhile + ":\n";
+}
+
+#id statements
+
+S->ID = expr
+	{
+		S.code = expr.code + " sw " + expr.place + ", " + ID.lexema;
+		releaseTemp(expr.place);
+	}

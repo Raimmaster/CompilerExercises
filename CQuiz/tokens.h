@@ -1,0 +1,12 @@
+#define KW_INT                           1
+#define KW_CHAR                          2
+#define TK_EOS                           3
+#define TK_ID                            4
+#define OP_ASSIGN                        5
+#define KW_PRINT                         6
+#define TK_LEFT_PAR                      7
+#define TK_RIGHT_PAR                     8
+#define TK_SUM                           9
+#define TK_SUB                          10
+#define LIT_INT                         11
+#define LIT_CHAR                        12
